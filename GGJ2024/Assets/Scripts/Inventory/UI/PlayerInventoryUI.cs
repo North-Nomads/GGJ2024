@@ -3,6 +3,7 @@ using System.Linq;
 using GGJ.Inventory.CustomEventArgs;
 using GGJ.Inventory.UI.Slots;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GGJ.Inventory.UI
 {
@@ -15,6 +16,8 @@ namespace GGJ.Inventory.UI
         private PlayerInventory _playerInventory;
         private InventorySlotUI[] _uiSlots;
         private InventorySlotUI _selectedSlot;
+
+        public bool IsActive => gameObject.activeInHierarchy;
 
         private InventorySlotUI SelectedSlot
         {
@@ -45,6 +48,11 @@ namespace GGJ.Inventory.UI
                 slotUI.SlotSelected += OnSelectSlot;
                 slotUI.SlotIsEmpty += OnEmptySlot;
             }
+        }
+
+        public void HandleInventoryView()
+        {
+            gameObject.SetActive(!IsActive);
         }
 
         private void OnEnable()

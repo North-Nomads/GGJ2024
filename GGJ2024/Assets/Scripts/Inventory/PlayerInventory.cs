@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GGJ.Inventory.UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GGJ.Inventory
 {
@@ -37,6 +38,14 @@ namespace GGJ.Inventory
                 {
                     TryAddItem(item);
                 }
+            }
+        }
+        
+        public void OnInventoryOpenClose(InputAction.CallbackContext callbackContext) 
+        {
+            if (callbackContext.performed)
+            {
+                view.HandleInventoryView();
             }
         }
         
