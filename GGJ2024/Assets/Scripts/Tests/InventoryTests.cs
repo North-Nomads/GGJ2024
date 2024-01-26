@@ -12,7 +12,7 @@ public class InventoryTests
     {
         GameObject playerObject = new GameObject();
         var inventory = playerObject.AddComponent<PlayerInventory>();
-        inventory.MaxCapacity = 5;
+        //inventory.MaxCapacity = 5;
         inventory.Initialize();
         var item = ScriptableObject.CreateInstance<ItemInfo>();
         
@@ -27,7 +27,7 @@ public class InventoryTests
     {
         GameObject playerObject = new GameObject();
         var inventory = playerObject.AddComponent<PlayerInventory>();
-        inventory.MaxCapacity = 5;
+        //inventory.MaxCapacity = 5;
         inventory.Initialize();
         var item = ScriptableObject.CreateInstance<ItemInfo>();
         inventory.TryAddItem(item);
@@ -43,7 +43,7 @@ public class InventoryTests
     {
         GameObject playerObject = new GameObject();
         var inventory = playerObject.AddComponent<PlayerInventory>();
-        inventory.MaxCapacity = 5;
+        //inventory.MaxCapacity = 5;
         inventory.Initialize();
         var item1 = ScriptableObject.CreateInstance<ItemInfo>();
         var item2 = ScriptableObject.CreateInstance<ItemInfo>();
@@ -61,7 +61,7 @@ public class InventoryTests
     {
         GameObject playerObject = new GameObject();
         var inventory = playerObject.AddComponent<PlayerInventory>();
-        inventory.MaxCapacity = 5;
+        //inventory.MaxCapacity = 5;
         inventory.Initialize();
         
         for (int i = 0; i < inventory.Slots.Count; i++)
@@ -80,7 +80,7 @@ public class InventoryTests
     {
         GameObject playerObject = new GameObject();
         var inventory = playerObject.AddComponent<PlayerInventory>();
-        inventory.MaxCapacity = 5;
+        //inventory.MaxCapacity = 5;
         inventory.Initialize();
         var item = ScriptableObject.CreateInstance<ItemInfo>();
         
