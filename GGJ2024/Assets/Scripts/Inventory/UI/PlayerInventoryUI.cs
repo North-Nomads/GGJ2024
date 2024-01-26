@@ -48,11 +48,21 @@ namespace GGJ.Inventory.UI
                 slotUI.SlotSelected += OnSelectSlot;
                 slotUI.SlotIsEmpty += OnEmptySlot;
             }
+            
+            HandleInventoryView();
         }
 
         public void HandleInventoryView()
         {
             gameObject.SetActive(!IsActive);
+        }
+
+        public void OnUIClose(InputAction.CallbackContext callbackContext)
+        {
+            if (IsActive)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         private void OnEnable()
