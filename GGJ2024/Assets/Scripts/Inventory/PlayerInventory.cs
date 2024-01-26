@@ -25,7 +25,6 @@ namespace GGJ.Inventory
         public void Initialize()
         {
             _slots = new InventorySlot[maxCapacity];
-            Debug.Log(maxCapacity);
 
             for (int cellIndex = 0; cellIndex < maxCapacity; cellIndex++)
             {
