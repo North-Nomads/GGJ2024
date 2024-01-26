@@ -1,34 +1,42 @@
 using System;
 using System.Collections.Generic;
+using GGJ.Inventory.UI;
 using UnityEngine;
 
 namespace GGJ.Inventory
 {
     public sealed class PlayerInventory : MonoBehaviour
     {
-        [SerializeField, Min(1)] private int maxCapacity;
+        [SerializeField] private PlayerInventoryUI view;
+        [SerializeField] private InventoryGrid inventoryGrid;
+        
+        [Header("Only for test")]
+        [SerializeField] private List<ItemInfo> testItem;
+        [SerializeField] private int testItemCount;
         
         private InventorySlot[] _slots;
 
-        public int MaxCapacity
-        {
-            get => maxCapacity;
-            set
-            {
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException("Capacity can't be below zero");
-                maxCapacity = value;
-            }
-        }
+        public InventoryGrid InventoryGrid => inventoryGrid;
+        public int MaxCapacity => inventoryGrid.Width * inventoryGrid.Height;
         public IReadOnlyList<InventorySlot> Slots => _slots;
 
         public void Initialize()
         {
-            _slots = new InventorySlot[maxCapacity];
+            _slots = new InventorySlot[MaxCapacity];
 
-            for (int cellIndex = 0; cellIndex < maxCapacity; cellIndex++)
+            for (int cellIndex = 0; cellIndex < MaxCapacity; cellIndex++)
             {
                 _slots[cellIndex] = new InventorySlot();
+            }
+            
+            view.Initialize(this);
+
+            for (int i = 0; i < testItemCount; i++)
+            {
+                foreach (ItemInfo item in testItem)
+                {
+                    TryAddItem(item);
+                }
             }
         }
         

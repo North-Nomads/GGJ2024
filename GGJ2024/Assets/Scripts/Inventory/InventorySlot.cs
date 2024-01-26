@@ -1,4 +1,5 @@
 using System;
+using GGJ.Inventory.CustomEventArgs;
 
 namespace GGJ.Inventory
 {
@@ -9,6 +10,8 @@ namespace GGJ.Inventory
         public bool IsEmpty => _itemInfo == null;
         public ItemInfo ItemInfo => _itemInfo;
 
+        public EventHandler<InventoryEventArgs> OnSlotStatusUpdate;
+
         public void AddInSlot<TItem>(TItem item) where TItem : ItemInfo
         {
             if (!IsEmpty)
@@ -17,6 +20,7 @@ namespace GGJ.Inventory
             }
             
             _itemInfo = item;
+            OnSlotStatusUpdate?.Invoke(this, new InventoryEventArgs(ItemInfo));
         }
 
         public void RemoveFromSlot()
@@ -27,6 +31,7 @@ namespace GGJ.Inventory
             }
             
             _itemInfo = null;
+            OnSlotStatusUpdate?.Invoke(this, new InventoryEventArgs(null));
         }
     }
 }
