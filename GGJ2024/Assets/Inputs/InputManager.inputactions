@@ -1,11 +1,33 @@
 {
-    "name": "PlayerInput",
+    "name": "InputManager",
     "maps": [
         {
             "name": "Player",
             "id": "09877a02-89dd-4dff-96e0-afa27d64b7c4",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "FishingCast",
+                    "type": "Button",
+                    "id": "5c84bb01-fa35-4bdc-8863-92e14f1c0a11",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9d28fda4-80fa-49b3-b243-9a0d197d9fb8",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FishingCast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
