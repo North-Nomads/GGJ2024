@@ -8,11 +8,14 @@ namespace GGJ.Fishing
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(PlayerInventory))]
+    [RequireComponent(typeof(LineRenderer))]
     public class PlayerFishing : MonoBehaviour
     {
         [SerializeField] private FishingEventProvider provider;
         [SerializeField] private float fishPullTime;
-
+        [SerializeField] private Transform rodEnd;
+        
+        private LineRenderer _fishingLineRenderer;
         private Animator _animationController;
         private PlayerInventory _inventory;
         private bool _suppressFishing;
@@ -20,6 +23,14 @@ namespace GGJ.Fishing
         private void Start()
         {
             _animationController = GetComponent<Animator>();
+            _fishingLineRenderer = GetComponent<LineRenderer>();
+            _inventory = GetComponent<PlayerInventory>();
+        }
+
+        private void Update()
+        {
+            _fishingLineRenderer.SetPosition(0, rodEnd.position);
+            _fishingLineRenderer.SetPosition(1, provider.transform.position);
         }
 
         public async void OnFishingCast(InputAction.CallbackContext context)
@@ -28,6 +39,7 @@ namespace GGJ.Fishing
                 return;
             _suppressFishing = true;
             _animationController.SetTrigger("Cast");
+            _fishingLineRenderer.enabled = true;
             var minigame = Instantiate(provider.GetRandomGame());
             bool win = await minigame.StartGameAsync();
             if (win)
@@ -41,6 +53,7 @@ namespace GGJ.Fishing
                 // Do something on catch end.
                 Debug.Log("Player is noob so he couldn't catch the fish.");
             }
+            _fishingLineRenderer.enabled = false;
             _suppressFishing = false;
         }
 
