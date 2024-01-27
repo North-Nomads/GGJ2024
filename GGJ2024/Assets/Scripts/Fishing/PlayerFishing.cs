@@ -1,6 +1,7 @@
 using GGJ.Inventory;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,7 +40,10 @@ namespace GGJ.Fishing
                 return;
             _suppressFishing = true;
             _animationController.SetTrigger("Cast");
+            await Task.Delay(2000);
             _fishingLineRenderer.enabled = true;
+            // Just wait for the fish.
+            await Task.Delay(Random.Range(13000, 18000));
             var minigame = Instantiate(provider.GetRandomGame());
             bool win = await minigame.StartGameAsync();
             if (win)
