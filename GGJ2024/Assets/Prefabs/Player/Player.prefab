@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2001809573957328759}
   - component: {fileID: 4082310441941514813}
   - component: {fileID: 1668230248295182036}
+  - component: {fileID: 146848674236834919}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e94173a66e24443ada2dfdd6626cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  provider: {fileID: 146848674236834919}
 --- !u!114 &1668230248295182036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +123,24 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &146848674236834919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154117090780022176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44d59159cb317242b04978cd1175d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableMinigames:
+  - Value: {fileID: 1857489970984224227, guid: 32be87c40e855184a9c4860c222f586b, type: 3}
+    Probability: 1
+  availableCatchableItems:
+  - Value: {fileID: 8536078210651078089, guid: 96759cb88bc976e41bfbe516cfb8c40e, type: 3}
+    Probability: 1
 --- !u!1 &230785466663577749
 GameObject:
   m_ObjectHideFlags: 0

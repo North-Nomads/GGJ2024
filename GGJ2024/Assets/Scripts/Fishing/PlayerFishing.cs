@@ -8,6 +8,7 @@ namespace GGJ.Fishing
     [RequireComponent(typeof(Animator))]
     public class PlayerFishing : MonoBehaviour
     {
+        [SerializeField] private FishingEventProvider provider;
         private Animator _animationController;
 
         private void Start()
@@ -15,9 +16,23 @@ namespace GGJ.Fishing
             _animationController = GetComponent<Animator>();
         }
 
-        public void OnFishingCast(InputAction.CallbackContext context)
+        public async void OnFishingCast(InputAction.CallbackContext context)
         {
-            _animationController.SetTrigger("Cast");
+            if (context.performed)
+            {
+                _animationController.SetTrigger("Cast");
+                var minigame = Instantiate(provider.GetRandomGame());
+                bool win = await minigame.StartGameAsync();
+                if (win)
+                {
+                    var caught = Instantiate(provider.GetRandomCatchable());
+                    // Do something, maybe in coroutine.
+                }
+                else
+                {
+                    // Do something on catch end.
+                }
+            }
         }
     }
 }
