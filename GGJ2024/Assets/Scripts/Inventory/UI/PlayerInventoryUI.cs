@@ -18,6 +18,7 @@ namespace GGJ.Inventory.UI
         private PlayerInventory _playerInventory;
         private InventorySlotUI[] _uiSlots;
         private InventorySlotUI _selectedSlot;
+        private GameObject _parent;
 
         public bool IsActive => gameObject.activeInHierarchy;
 
@@ -36,6 +37,7 @@ namespace GGJ.Inventory.UI
 
         public void Initialize(PlayerInventory playerInventory)
         {
+            _parent = transform.parent.gameObject;
             _playerInventory = playerInventory;
             _uiSlots = new InventorySlotUI[_playerInventory.MaxCapacity];
 
@@ -56,7 +58,7 @@ namespace GGJ.Inventory.UI
 
         public void HandleInventoryView()
         {
-            gameObject.SetActive(!IsActive);
+            _parent.SetActive(!IsActive);
 
             if (IsActive)
             {
@@ -69,7 +71,7 @@ namespace GGJ.Inventory.UI
         {
             if (IsActive)
             {
-                gameObject.SetActive(false);
+                _parent.SetActive(false);
             }
         }
 

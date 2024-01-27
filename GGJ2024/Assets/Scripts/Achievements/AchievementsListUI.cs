@@ -11,6 +11,8 @@ namespace GGJ.Achievements
         [SerializeField] private AchievementCard cardPrefab;
         [SerializeField] private GridLayoutGroup viewport;
 
+        private GameObject _parent;
+
         private void Start()
         {
             // HACK: made here for test.
@@ -28,7 +30,9 @@ namespace GGJ.Achievements
                 card.SetAchievementInfo(achievement);
             }
 
-            gameObject.SetActive(false);
+            _parent = transform.parent.gameObject;
+            _parent.SetActive(false);
+
         }
 
         public void OpenCloseWindow(InputAction.CallbackContext callbackContext)
@@ -36,7 +40,7 @@ namespace GGJ.Achievements
             if (!callbackContext.started)
                 return;
 
-            gameObject.SetActive(!gameObject.activeInHierarchy);
+            _parent.SetActive(!_parent.activeInHierarchy);
         }
 
         public void CloseWindow(InputAction.CallbackContext callbackContext)
@@ -44,7 +48,7 @@ namespace GGJ.Achievements
             if (!gameObject.activeSelf)
                 return;
 
-            gameObject.SetActive(false);
+            _parent.SetActive(false);
         }
     }
 }
