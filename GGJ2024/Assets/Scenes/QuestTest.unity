@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 261.8995, g: 324.45413, b: 429.43256, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -268,6 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 407189325}
   - component: {fileID: 407189324}
+  - component: {fileID: 407189326}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -309,6 +310,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407189326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407189323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b000b20aadf49e9b96110f5e670d5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allQuests:
+  - {fileID: 213068665107443586, guid: 183f45f790a16ed48a89c808ddbb059f, type: 3}
+  initialQuest: {fileID: 213068665107443586, guid: 183f45f790a16ed48a89c808ddbb059f, type: 3}
 --- !u!1 &603475171
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,6 +791,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1919432146}
     m_Modifications:
+    - target: {fileID: 67228971814890574, guid: f340c479156223b4ebbaadaf4a499958, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2747552296277755196, guid: f340c479156223b4ebbaadaf4a499958, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -901,7 +921,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1723502166
 MonoBehaviour:
   m_ObjectHideFlags: 0
