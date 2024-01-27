@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using GGJ.Inventory;
+using GGJ.Inventory.CustomEventArgs;
+using System.Linq;
 using TMPro;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,12 +9,13 @@ public class QuestWindow : MonoBehaviour
 {
     [SerializeField] private GameObject questWindow;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private PlayerInventory playerInventory;
 
     private QuestTasks[] _quests;
-    private GameObject _fishNameNeeded;
+    private ItemInfo _fishNameNeeded;
     private bool _isOpend;
     private bool _questStatus;
-    private int _carpCount;
+    private int _fishCountInInv;
     private int _fishNeeded;
     private int _questCount;
     
@@ -37,12 +38,26 @@ public class QuestWindow : MonoBehaviour
 
     private void Start()
     {
-        _carpCount = 0;
+        _fishCountInInv = 0;
         _questCount = 1;
         _isOpend = true;
         _questStatus = false;
         _quests = Resources.LoadAll<QuestTasks>("Quests");
+        foreach (InventorySlot slot in playerInventory.Slots)
+        {
+            slot.OnSlotStatusUpdate += OnInventoryUpdate;
+        }
         TakeQuest(_questCount);
+    }
+
+    private void OnInventoryUpdate(object sender, InventoryEventArgs args)
+    {
+        _fishCountInInv = 0;
+        foreach (var slot in playerInventory.Slots.Where(x => x.ItemInfo != null))
+        {
+            if (slot.ItemInfo == _fishNameNeeded)
+                _fishCountInInv += 1;
+        }
     }
 
     private void Update()
@@ -59,8 +74,8 @@ public class QuestWindow : MonoBehaviour
 
     private void QuestProgress()
     {
-        if (_fishNeeded > _carpCount)
-            text.text = $"Quest {_questCount}: Take {_fishNeeded} carps. \n{_carpCount}/{_fishNeeded}";
+        if (_fishNeeded > _fishCountInInv)
+            text.text = $"Quest {_questCount}: Take {_fishNeeded} carps. \n{_fishCountInInv}/{_fishNeeded}";
         else
             _questStatus = true;
     }
@@ -69,6 +84,11 @@ public class QuestWindow : MonoBehaviour
     {
         if (context.performed && _questStatus)
         {
+            for (int i = 0; i < _fishNeeded; i++)
+            {
+                playerInventory.TryRemoveItem(_fishNameNeeded);
+            }
+            _fishCountInInv = 0;
             _questCount += 1;
             _questStatus = false;
             TakeQuest(_questCount);
@@ -78,19 +98,11 @@ public class QuestWindow : MonoBehaviour
     private void TakeQuest(int questNum)
     {
         _fishNeeded = _quests[questNum - 1].FishCount;
-        //_fishNameNeeded = _quests[questNum - 1].FishName;
+        _fishNameNeeded = _quests[questNum - 1].FishName;
     }
 
     private void FinishQuest()
     {
         text.text = $"Quest {_questCount}: complete.";
-    }
-
-    public void OnTakingCarp(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _carpCount += 1;
-        }
     }
 }

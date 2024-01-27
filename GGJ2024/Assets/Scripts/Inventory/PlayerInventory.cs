@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using GGJ.Inventory.UI;
 using UnityEngine;
@@ -38,6 +39,16 @@ namespace GGJ.Inventory
                 {
                     TryAddItem(item);
                 }
+            }
+            StartCoroutine(test());
+        }
+
+        public IEnumerator test()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(3);
+                TryAddItem(testItem[0]);
             }
         }
         

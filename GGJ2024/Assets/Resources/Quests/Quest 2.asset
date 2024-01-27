@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Quest 2
   m_EditorClassIdentifier: 
   id: 2
-  fishName: Losos
+  fishName: {fileID: 11400000, guid: 1b2b46eb877a42a45a55d79e21b36ba8, type: 2}
   fishCount: 3

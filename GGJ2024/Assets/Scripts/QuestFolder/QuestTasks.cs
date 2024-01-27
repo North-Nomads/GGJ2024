@@ -1,3 +1,4 @@
+using GGJ.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,9 @@ using UnityEngine;
 public class QuestTasks : ScriptableObject
 {
     [SerializeField] private int id;
-    [SerializeField] private string fishName;
+    [SerializeField] private ItemInfo fishName;
     [SerializeField] private int fishCount;
     public int Id => id;
-    public string FishName => fishName;
+    public ItemInfo FishName => fishName;
     public int FishCount => fishCount;
 }
