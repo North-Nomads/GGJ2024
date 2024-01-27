@@ -2,6 +2,7 @@
 using System.Linq;
 using GGJ.Inventory.CustomEventArgs;
 using GGJ.Inventory.UI.Slots;
+using GGJ.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,7 @@ namespace GGJ.Inventory.UI
         [SerializeField] private InventorySlotUI slotUIPrefab;
         [SerializeField] private GameObject slotUIContainer;
         [SerializeField] private HintWindow hintWindow;
+        [SerializeField] private ScreenBlur screenBlur;
 
         private PlayerInventory _playerInventory;
         private InventorySlotUI[] _uiSlots;
@@ -55,6 +57,12 @@ namespace GGJ.Inventory.UI
         public void HandleInventoryView()
         {
             gameObject.SetActive(!IsActive);
+
+            if (IsActive)
+            {
+                screenBlur.ToggleBlurring();
+                SelectFirstNotEmpty();
+            }
         }
 
         public void OnUIClose(InputAction.CallbackContext callbackContext)
@@ -65,13 +73,9 @@ namespace GGJ.Inventory.UI
             }
         }
 
-        private void OnEnable()
-        {
-            SelectFirstNotEmpty();
-        }
-
         private void OnDisable()
         {
+            screenBlur.ToggleBlurring();
             DeselectAll();
         }
 
