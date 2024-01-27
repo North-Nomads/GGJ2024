@@ -1,0 +1,94 @@
+{
+    "name": "QuestControls",
+    "maps": [
+        {
+            "name": "QuestWindow",
+            "id": "2ceec72b-47f9-48f9-862c-812b0bd7c293",
+            "actions": [
+                {
+                    "name": "WindowInteraction",
+                    "type": "Button",
+                    "id": "7749fd41-a09b-47b5-bdb4-25e8b8f7951c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TakingCarp",
+                    "type": "Button",
+                    "id": "bfe46442-3e2e-4022-893c-145d1824b3bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TakingLosos",
+                    "type": "Button",
+                    "id": "3bc60ffe-6829-4a4d-bf2c-a2830d21b2c0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CompleQuest",
+                    "type": "Button",
+                    "id": "492388c6-65fb-4ff6-bfaf-e4e6c3fb6402",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e4fd5af2-2829-46d9-b670-2e375bfd26da",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WindowInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "61b84b92-a1f1-4d85-8ad4-490e9871d04b",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TakingCarp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a77846c5-2b2e-4073-84dc-0d8f983dce32",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TakingLosos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb2645c9-a759-4673-8d0d-a5cdeded8fed",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CompleQuest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
