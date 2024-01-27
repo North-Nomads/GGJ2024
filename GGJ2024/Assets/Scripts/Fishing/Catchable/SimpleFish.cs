@@ -6,7 +6,7 @@ namespace GGJ.Fishing.Catchable
     {
         public override void OnCatchEnd(PlayerFishing fisher)
         {
-            throw new System.NotImplementedException();
+            Destroy(gameObject);
         }
     }
 }

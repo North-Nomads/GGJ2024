@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4082310441941514813}
   - component: {fileID: 1668230248295182036}
   - component: {fileID: 146848674236834919}
+  - component: {fileID: 7170000026182929416}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -77,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   provider: {fileID: 146848674236834919}
+  fishPullTime: 2
 --- !u!114 &1668230248295182036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,9 +105,25 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c23d0763-44c0-44e5-a937-0f1ccaaf7212
+    m_ActionName: Player/Inventory (Open)[/Keyboard/b,/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c5a36863-49f9-4f9f-b639-ab0a8ff07f0d
+    m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ec1daf9c-2718-4518-8e21-1ecda0b70293
+    m_ActionName: UI/Inventory (Close)[/Keyboard/b,/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 850410d2-6695-4fce-b147-df1884a65532
+    m_ActionName: UI/UI (Close)[/Keyboard/escape]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4082310441941514813}
-        m_TargetAssemblyTypeName: GGJ.Fishing.PlayerFishing, Assembly-CSharp
+        m_TargetAssemblyTypeName: GGJ.Fishing.PlayerFishing, Fishing
         m_MethodName: OnFishingCast
         m_Mode: 0
         m_Arguments:
@@ -116,8 +134,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 5c84bb01-fa35-4bdc-8863-92e14f1c0a11
-    m_ActionName: Player/FishingCast
+    m_ActionId: 7803a83d-7649-4b1c-b2dd-7d9e6ef3f234
+    m_ActionName: Player/Cast[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -141,6 +159,24 @@ MonoBehaviour:
   availableCatchableItems:
   - Value: {fileID: 8536078210651078089, guid: 96759cb88bc976e41bfbe516cfb8c40e, type: 3}
     Probability: 1
+--- !u!114 &7170000026182929416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154117090780022176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366a9114898690c46927fd6d22ba8f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 0}
+  inventoryGrid:
+    width: 2
+    height: 2
+  testItem: []
+  testItemCount: 1
 --- !u!1 &230785466663577749
 GameObject:
   m_ObjectHideFlags: 0
