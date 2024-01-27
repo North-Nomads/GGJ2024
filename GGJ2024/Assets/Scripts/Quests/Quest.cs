@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using GGJ.Quests.CustomEventArgs;
 using UnityEngine;
 
 namespace GGJ.Quests
 {
-    public class Quest : MonoBehaviour
+    /*public class Quest : 
     {
-        [SerializeField] private QuestInfo questInfo;
+        [SerializeField] privte 
+
+
+        */
+    
+    /*[SerializeField] private QuestInfo questInfo;
         [SerializeField] private List<QuestStep> questSteps;
 
         private int _currentQuestStepIndex;
@@ -73,6 +75,6 @@ namespace GGJ.Quests
             }
             
             _currentQuestStep = questSteps[_currentQuestStepIndex + 1];
-        }
-    }
+        }*//*
+}*/
 }

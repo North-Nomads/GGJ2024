@@ -24,7 +24,7 @@ namespace GGJ.Quests
                 }
 
                 _currentQuest = value;
-                _currentQuest.Initialize(gameObject, questView, 0);
+                _currentQuest.Initialize(gameObject, questView, 0); // why gameobject?
                 _currentQuest.OnQuestCompleted += OnQuestCompleted;
                 questView.Title = _currentQuest.QuestInfo.Title;
             }
