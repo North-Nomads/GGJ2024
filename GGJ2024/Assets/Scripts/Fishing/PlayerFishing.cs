@@ -15,6 +15,7 @@ namespace GGJ.Fishing
 
         private Animator _animationController;
         private PlayerInventory _inventory;
+        private bool _suppressFishing;
 
         private void Start()
         {
@@ -23,23 +24,24 @@ namespace GGJ.Fishing
 
         public async void OnFishingCast(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (_suppressFishing || !context.performed)
+                return;
+            _suppressFishing = true;
+            _animationController.SetTrigger("Cast");
+            var minigame = Instantiate(provider.GetRandomGame());
+            bool win = await minigame.StartGameAsync();
+            if (win)
             {
-                _animationController.SetTrigger("Cast");
-                var minigame = Instantiate(provider.GetRandomGame());
-                bool win = await minigame.StartGameAsync();
-                if (win)
-                {
-                    var caught = Instantiate(provider.GetRandomCatchable());
-                    // Do something, maybe in coroutine.
-                    StartCoroutine(PullFish(caught));
-                }
-                else
-                {
-                    // Do something on catch end.
-                    Debug.Log("Player is noob so he couldn't catch the fish.");
-                }
+                var caught = Instantiate(provider.GetRandomCatchable(), provider.transform.position, Quaternion.identity);
+                // Do something, maybe in coroutine.
+                StartCoroutine(PullFish(caught));
             }
+            else
+            {
+                // Do something on catch end.
+                Debug.Log("Player is noob so he couldn't catch the fish.");
+            }
+            _suppressFishing = false;
         }
 
         private IEnumerator PullFish(CatchableItemBase fish)
@@ -47,7 +49,7 @@ namespace GGJ.Fishing
             float time = fishPullTime;
             Vector3 fixedMovement = transform.position - fish.transform.position;
             float speed = fixedMovement.magnitude / time;
-            fixedMovement *= speed;
+            fixedMovement = fixedMovement.normalized * speed;
             while (time > 0)
             {
                 yield return new WaitForEndOfFrame();
