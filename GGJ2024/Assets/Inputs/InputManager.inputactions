@@ -6,9 +6,18 @@
             "id": "09877a02-89dd-4dff-96e0-afa27d64b7c4",
             "actions": [
                 {
-                    "name": "Inventory (Open)",
+                    "name": "Inventory (Open/Close)",
                     "type": "Button",
                     "id": "c23d0763-44c0-44e5-a937-0f1ccaaf7212",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UI (Close)",
+                    "type": "Button",
+                    "id": "0d25ba7f-7086-46c9-831d-0fbd1b67a2b3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
@@ -32,7 +41,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory (Open)",
+                    "action": "Inventory (Open/Close)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -43,7 +52,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory (Open)",
+                    "action": "Inventory (Open/Close)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -55,6 +64,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acd19d0a-2bce-4939-8767-861c2e336d8d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI (Close)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
