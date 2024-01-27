@@ -1,13 +1,10 @@
-using GGJ;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
 namespace GGJ.Achievements
 {
-
     public class AchievementsListUI : MonoBehaviour
     {
         [SerializeField] private AchievementsManager achievementsManager;
@@ -36,10 +33,18 @@ namespace GGJ.Achievements
 
         public void OpenCloseWindow(InputAction.CallbackContext callbackContext)
         {
-            if (callbackContext.canceled)
+            if (!callbackContext.started)
                 return;
 
             gameObject.SetActive(!gameObject.activeInHierarchy);
+        }
+
+        public void CloseWindow(InputAction.CallbackContext callbackContext)
+        {
+            if (!gameObject.activeSelf)
+                return;
+
+            gameObject.SetActive(false);
         }
     }
 }

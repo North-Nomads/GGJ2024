@@ -1,10 +1,9 @@
 using System;
-using System.IO;
 using UnityEngine;
 
-namespace GGJ
+namespace GGJ.Achievements
 {
-	[CreateAssetMenu(fileName = "New Achievement", menuName = "Achievement")]
+    [CreateAssetMenu(fileName = "New Achievement", menuName = "Achievement")]
 	public class AchievementInfo : ScriptableObject
 	{
 		[SerializeField] private bool isHidden;

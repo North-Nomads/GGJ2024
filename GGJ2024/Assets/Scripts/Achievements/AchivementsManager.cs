@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace GGJ
+namespace GGJ.Achievements
 {
 	[CreateAssetMenu(fileName = "Achievements List", menuName = "Achievements list")]
 	public class AchievementsManager : ScriptableObject
