@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Cast",
+                    "type": "Button",
+                    "id": "7803a83d-7649-4b1c-b2dd-7d9e6ef3f234",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FastTravel (Open)",
+                    "type": "Button",
+                    "id": "53d8dcff-6e06-4784-a3a1-b8b02843cff5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -75,6 +93,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "UI (Close)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d60ccbdb-4375-4361-bbf5-0e7d778565c4",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39eeacec-2fea-4a19-9852-370b41a95143",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FastTravel (Open)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

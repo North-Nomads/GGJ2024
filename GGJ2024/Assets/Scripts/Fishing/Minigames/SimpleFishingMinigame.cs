@@ -37,11 +37,11 @@ namespace GGJ.Fishing.Minigames
         {
             fish.anchoredPosition += Vector2.right * _speed;
             float xPos = Mathf.Abs(fish.anchoredPosition.x);
-            if (xPos < 150)
+            if (xPos < 200)
             {
                 _progress++;
             }
-            else if (xPos < 250)
+            else if (xPos < 300)
             {
                 _progress -= 3;
             }
