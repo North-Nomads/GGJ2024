@@ -43,21 +43,16 @@ public class QuestWindow : MonoBehaviour
         _isOpend = true;
         _questStatus = false;
         _quests = Resources.LoadAll<QuestTasks>("Quests");
+        TakeQuest(_questCount);
         foreach (InventorySlot slot in playerInventory.Slots)
         {
             slot.OnSlotStatusUpdate += OnInventoryUpdate;
         }
-        TakeQuest(_questCount);
     }
 
     private void OnInventoryUpdate(object sender, InventoryEventArgs args)
     {
-        _fishCountInInv = 0;
-        foreach (var slot in playerInventory.Slots.Where(x => x.ItemInfo != null))
-        {
-            if (slot.ItemInfo == _fishNameNeeded)
-                _fishCountInInv += 1;
-        }
+        _fishCountInInv = playerInventory.Slots.Count(x => x.ItemInfo == _fishNameNeeded);
     }
 
     private void Update()
@@ -88,8 +83,7 @@ public class QuestWindow : MonoBehaviour
             {
                 playerInventory.TryRemoveItem(_fishNameNeeded);
             }
-            _fishCountInInv = 0;
-            _questCount += 1;
+            _questCount ++;
             _questStatus = false;
             TakeQuest(_questCount);
         }
