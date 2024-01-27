@@ -242,7 +242,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2931896635013627578}
+        m_TargetAssemblyTypeName: GGJ.Inventory.PlayerInventory, Inventory
+        m_MethodName: OnInventoryOpenClose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c23d0763-44c0-44e5-a937-0f1ccaaf7212
     m_ActionName: Player/Inventory (Open)[/Keyboard/b,/Keyboard/i]
   - m_PersistentCalls:
@@ -269,6 +281,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ec1daf9c-2718-4518-8e21-1ecda0b70293
     m_ActionName: UI/Inventory (Close)[/Keyboard/b,/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 850410d2-6695-4fce-b147-df1884a65532
+    m_ActionName: UI/UI (Close)[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_ActionId: 53d8dcff-6e06-4784-a3a1-b8b02843cff5
+    m_ActionName: Player/FastTravel (Open)[/Keyboard/m]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 850410d2-6695-4fce-b147-df1884a65532
@@ -332,7 +364,6 @@ MonoBehaviour:
   provider: {fileID: 0}
   fishPullTime: 1.5
   rodEnd: {fileID: 4070913182026085057}
-  fishingLineRenderer: {fileID: 9047014418611360420}
 --- !u!120 &9047014418611360420
 LineRenderer:
   serializedVersion: 2
