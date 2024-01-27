@@ -11,6 +11,8 @@ namespace GGJ.Fishing.Minigames
         [SerializeField] private float passiveSpeed;
         [SerializeField] private float activeSpeed;
         [SerializeField] private float difficulty;
+        [SerializeField] private int progressSuccessValue;
+        [SerializeField] private int progressFailureValue;
 
         private float _speed;
         private float _direction;
@@ -39,11 +41,11 @@ namespace GGJ.Fishing.Minigames
             float xPos = Mathf.Abs(fish.anchoredPosition.x);
             if (xPos < 200)
             {
-                _progress++;
+                _progress += progressSuccessValue;
             }
             else if (xPos < 300)
             {
-                _progress -= 3;
+                _progress -= progressFailureValue;
             }
             else
             {

@@ -429,6 +429,8 @@ MonoBehaviour:
   passiveSpeed: 4
   activeSpeed: 3
   difficulty: 1
+  progressSuccessValue: 1
+  progressFailureValue: 2
 --- !u!1 &7848635601625772872
 GameObject:
   m_ObjectHideFlags: 0
