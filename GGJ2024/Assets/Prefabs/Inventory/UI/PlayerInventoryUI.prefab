@@ -390,7 +390,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -409,6 +409,7 @@ MonoBehaviour:
   slotUIPrefab: {fileID: 8043404613537389915, guid: b7a9fe04625677f4cb28a2db220a1c92, type: 3}
   slotUIContainer: {fileID: 3358946285054336846}
   hintWindow: {fileID: 3287132117166440333}
+  screenBlur: {fileID: 0}
 --- !u!1 &7507548086112230645
 GameObject:
   m_ObjectHideFlags: 0

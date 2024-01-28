@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using GGJ.Inventory.UI;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace GGJ.Inventory
         public InventoryGrid InventoryGrid => inventoryGrid;
         public int MaxCapacity => inventoryGrid.Width * inventoryGrid.Height;
         public IReadOnlyList<InventorySlot> Slots => _slots;
+        public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
 
         public void Initialize()
         {
@@ -38,6 +40,19 @@ namespace GGJ.Inventory
                 {
                     TryAddItem(item);
                 }
+            }
+            StartCoroutine(test());
+        }
+
+        public IEnumerator test()
+        {
+            if (testItem.Count == 0)
+                yield break;
+
+            while (true)
+            {
+                yield return new WaitForSeconds(3);
+                TryAddItem(testItem[0]);
             }
         }
         
@@ -99,8 +114,8 @@ namespace GGJ.Inventory
             {
                 throw new Exception("This slot is not empty. Can't add item.");
             }
-
             slot.AddInSlot(item);
+            OnPlayerInventoryUpdated(this, item);
         }
         
         private void RemoveItem<TItem>(TItem item, InventorySlot slot) where TItem : ItemInfo

@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: Quest 2
   m_EditorClassIdentifier: 
   id: 2
-  fishName: Losos
-  fishCount: 3
+  targetItem: {fileID: 0}
+  targetQuantity: 0
+  recipient: {fileID: 0}
+  title: "\u0422\u0435\u0441\u0442 \u043D\u0430 \u043F\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C"
+  description: "\u042F \u043F\u0440\u0438\u0448\u0435\u043B \u0434\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C\u0441\u044F"
+  questFinishedText: "\u042F \u043F\u0440\u0438\u0448\u0435\u043B \u0434\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C\u0441\u044F
+    \u0438 \u044F \u0434\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u043B\u0441\u044F"
+  speeches: []
