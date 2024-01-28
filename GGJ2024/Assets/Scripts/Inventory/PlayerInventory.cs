@@ -21,6 +21,7 @@ namespace GGJ.Inventory
         public InventoryGrid InventoryGrid => inventoryGrid;
         public int MaxCapacity => inventoryGrid.Width * inventoryGrid.Height;
         public IReadOnlyList<InventorySlot> Slots => _slots;
+        public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
 
         public void Initialize()
         {
@@ -109,7 +110,7 @@ namespace GGJ.Inventory
             {
                 throw new Exception("This slot is not empty. Can't add item.");
             }
-
+            OnPlayerInventoryUpdated(this, item);
             slot.AddInSlot(item);
         }
         

@@ -1,45 +1,46 @@
+using GGJ.Inventory;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GGJ.Quests
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] private List<Quest> allQuests;
-        [SerializeField] private Quest initialQuest;
-        [SerializeField] private QuestView questView;
+        [SerializeField] private QuestInfo testQuest;
 
-        private Quest _currentQuest;
-        private int _currentQuestId;
+        private QuestInfo[] _allQuests;
+        private QuestInfo _currentQuest;
 
-        public Quest CurrentQuest
+        public QuestInfo CurrentQuest
         {
             get => _currentQuest;
             set
             {
-                if (value.QuestInfo.Id <= _currentQuestId)
-                {
-                    throw new ArgumentException("This quest already completed");
-                }
+                if (_currentQuest != null)
+                    if (value.Id <= _currentQuest.Id)
+                        throw new ArgumentException($"Quest must increase. Was: {_currentQuest.Id}; Given: {value.Id}");
+                
 
                 _currentQuest = value;
-                _currentQuest.Initialize(gameObject, questView, 0); // why gameobject?
-                _currentQuest.OnQuestCompleted += OnQuestCompleted;
-                questView.Title = _currentQuest.QuestInfo.Title;
+                OnQuestChanged(this, value);
             }
         }
 
-        private void Awake() => Initialize();
+        public event EventHandler<QuestInfo> OnQuestChanged = delegate { };
+        public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
 
-        private void Initialize()
+        private void Start()
         {
-            CurrentQuest = initialQuest;
+            _allQuests = Resources.LoadAll<QuestInfo>("Quests/");
+            print($"Loaded {_allQuests.Length}");
+            TakeNewQuest(testQuest);
         }
 
-        private void OnQuestCompleted()
+        public void TakeNewQuest(QuestInfo quest)
         {
-            Debug.Log("Quest completed");
+            CurrentQuest = quest;
         }
+
+        
     }
 }

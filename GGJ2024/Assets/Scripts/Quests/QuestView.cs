@@ -1,31 +1,76 @@
+using GGJ.Inventory;
 using TMPro;
 using UnityEngine;
 
-public class QuestView : MonoBehaviour
+namespace GGJ.Quests
 {
-    [SerializeField] private GameObject questWindow;
-    [SerializeField] private TMP_Text title;
-    [SerializeField] private TMP_Text goalText;
-
-    public string Title
+    public class QuestView : MonoBehaviour
     {
-        get => title.text;
-        set => title.text = value;
-    }
+        [SerializeField] private QuestManager questManager;
+        [SerializeField] private PlayerInventory playerInventory;
 
-    public string GoalText
-    {
-        get => goalText.text;
-        set => goalText.text = value;
-    }
+        [SerializeField] private TMP_Text title;
+        [SerializeField] private TMP_Text goalText;
+        [SerializeField] private string bringQuestTemplate;
+        [SerializeField] private Color finishedQuestFontColor;
+        [SerializeField] private Color inProgressQuestFontColor;
 
-    public void Initialize()
-    {
-        
-    }
+        private QuestInfo _quest;
+        private int _goal;
 
-    public void UpdateView(string goalString)
-    {
-        GoalText = goalString;
+        private void Start()
+        {
+            questManager.OnQuestChanged += SetNewQuest;
+            playerInventory.OnPlayerInventoryUpdated += OnPlayerGotNewItem;
+        }
+
+        public void SetNewQuest(object sender, QuestInfo quest)
+        {
+            print("Set new quest");
+            _quest = quest;
+            _goal = _quest.TargetQuantity;
+            title.text = _quest.Title;
+            
+            goalText.text = $"{_quest.TargetItem.Title} 0/{_goal}";
+            goalText.color = inProgressQuestFontColor;
+            
+            CheckQuestProgress(0);
+        }
+
+        public void CheckQuestProgress(int newValue)
+        {
+            if (_goal <= newValue)
+            {
+                goalText.text = _quest.FinishText;
+                goalText.color = finishedQuestFontColor;
+            }
+            else
+            {
+                goalText.text = $"{_quest.TargetItem.Title} {newValue}/{_goal}";
+            }
+        }
+
+        public void OnPlayerGotNewItem(object sender, ItemInfo newItem)
+        {
+            print("New item");
+            if (newItem == _quest.TargetItem)
+                CheckQuestProgress(CountAllOccurenciesOfType(newItem));
+        }
+
+        private int CountAllOccurenciesOfType(ItemInfo item)
+        {
+            int c = 0;
+            foreach (var slot in playerInventory.Slots)
+            {
+                if (slot.ItemInfo == null) continue;
+
+                print($"{slot.ItemInfo.name}");
+                print($"{ item.name}");
+
+                if (slot.ItemInfo == item)
+                    c++;
+            }
+            return c;
+        }
     }
 }

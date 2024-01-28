@@ -60,7 +60,7 @@ namespace GGJ.Inventory.UI
 
             if (IsActive)
             {
-                screenBlur.ToggleBlurring();
+                //screenBlur.ToggleBlurring();
                 SelectFirstNotEmpty();
             }
         }
@@ -75,7 +75,7 @@ namespace GGJ.Inventory.UI
 
         private void OnDisable()
         {
-            screenBlur.ToggleBlurring();
+            //screenBlur.ToggleBlurring();
             DeselectAll();
         }
 
