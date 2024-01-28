@@ -48,6 +48,9 @@ namespace GGJ.Quests
             {
                 goalText.text = _quest.FinishText;
                 goalText.color = finishedQuestFontColor;
+                
+                // debug only
+                questManager.SubmitCurrentQuest();
             }
             else
             {

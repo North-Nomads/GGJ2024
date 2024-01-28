@@ -1,5 +1,6 @@
 using GGJ.Inventory;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace GGJ.Quests
@@ -7,6 +8,7 @@ namespace GGJ.Quests
     public class QuestManager : MonoBehaviour
     {
         [SerializeField] private QuestInfo testQuest;
+        [SerializeField] private QuestInfo testQuest2;
 
         private QuestInfo[] _allQuests;
         private QuestInfo _currentQuest;
@@ -41,6 +43,16 @@ namespace GGJ.Quests
             CurrentQuest = quest;
         }
 
-        
+        public void SubmitCurrentQuest()
+        {
+            // coroutine is debug only
+            StartCoroutine(WaitSomeTime());
+
+            IEnumerator WaitSomeTime()
+            {
+                yield return new WaitForSeconds(3f);
+                CurrentQuest = testQuest2;
+            }
+        }
     }
 }
