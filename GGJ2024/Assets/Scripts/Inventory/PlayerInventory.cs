@@ -55,10 +55,11 @@ namespace GGJ.Inventory
         
         public void OnInventoryOpenClose(InputAction.CallbackContext callbackContext) 
         {
-            if (callbackContext.performed)
-            {
-                view.HandleInventoryView();
-            }
+            if (!callbackContext.started)
+                return;
+               
+            view.HandleInventoryView();
+            
         }
         
         public bool TryAddItem<TItem>(TItem item) where TItem : ItemInfo

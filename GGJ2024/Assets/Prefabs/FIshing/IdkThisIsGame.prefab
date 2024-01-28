@@ -342,7 +342,7 @@ RectTransform:
   - {fileID: 4727657044946659916}
   - {fileID: 1482579158480380495}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -426,9 +426,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indicator: {fileID: 6649481140825982394}
   fish: {fileID: 1910977696997233193}
-  passiveSpeed: 2
+  passiveSpeed: 4
   activeSpeed: 3
   difficulty: 1
+  progressSuccessValue: 1
+  progressFailureValue: 2
 --- !u!1 &7848635601625772872
 GameObject:
   m_ObjectHideFlags: 0
