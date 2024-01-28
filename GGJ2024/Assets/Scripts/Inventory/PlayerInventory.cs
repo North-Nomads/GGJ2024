@@ -59,8 +59,9 @@ namespace GGJ.Inventory
         
         public void OnInventoryOpenClose(InputAction.CallbackContext callbackContext) 
         {
-            if (!callbackContext.started)
+            if (!callbackContext.performed)
                 return;
+            Debug.Log(callbackContext.phase);
                
             view.HandleInventoryView();
             
