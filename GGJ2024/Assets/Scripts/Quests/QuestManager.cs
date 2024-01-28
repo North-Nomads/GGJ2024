@@ -47,7 +47,6 @@ namespace GGJ.Quests
         public void SubmitCurrentQuest()
         {
             inventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
-            //CurrentQuest = testQuest2;
         }
     }
 }
