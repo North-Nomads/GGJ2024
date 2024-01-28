@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: QuestInfo_1
   m_EditorClassIdentifier: 
   id: 0
-  targetItem: {fileID: 0}
-  targetQuantity: 0
-  recipient: {fileID: 0}
-  title: 
+  targetItem: {fileID: 11400000, guid: fc1d3db2da9a6d7409c1d80ae2599118, type: 2}
+  targetQuantity: 1
+  recipient: {fileID: 11400000, guid: faf998d3d5225b747a35a149212595b0, type: 2}
+  title: "\u041B\u043E\u0432\u0443\u0448\u043A\u0430 \u0432 \u041A\u043B\u044E\u0447\u0430\u0445"
   description: 
   questFinishedText: 
   speeches: []

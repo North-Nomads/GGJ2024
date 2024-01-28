@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876d3cb0f8aed484b9e0a52f3059ae12, type: 3}
   m_Name: QuestInfo_6
   m_EditorClassIdentifier: 
-  id: 0
-  targetItem: {fileID: 0}
-  targetQuantity: 0
-  recipient: {fileID: 0}
-  title: 
+  id: 5
+  targetItem: {fileID: 11400000, guid: 9fb690dc96c262044a094dafb4f26e6e, type: 2}
+  targetQuantity: 2
+  recipient: {fileID: 11400000, guid: e088f89ced53f9d4dbe6f6c034e67be2, type: 2}
+  title: "\u041E\u043F\u044F\u0442\u044C \u0440\u0430\u0431\u043E\u0442\u0430?"
   description: 
   questFinishedText: 
   speeches: []

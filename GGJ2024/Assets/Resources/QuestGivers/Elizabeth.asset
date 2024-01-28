@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffebb51524b406e9fbef93316d7bb69, type: 3}
   m_Name: Elizabeth
   m_EditorClassIdentifier: 
-  _quests: []
+  _quests:
+  - {fileID: 11400000, guid: 7699d56b5ec57874ca38f37324e027e0, type: 2}
+  - {fileID: 11400000, guid: f899ecada4086bf4b99581ea01889da5, type: 2}
   busyPhrase: 

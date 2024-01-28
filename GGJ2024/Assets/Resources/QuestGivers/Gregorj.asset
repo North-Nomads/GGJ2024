@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffebb51524b406e9fbef93316d7bb69, type: 3}
   m_Name: Gregorj
   m_EditorClassIdentifier: 
-  _quests: []
+  _quests:
+  - {fileID: 11400000, guid: 48252d1e82ac289408775c919e533331, type: 2}
+  - {fileID: 11400000, guid: 482048532c7c7dd4294e569587913c81, type: 2}
+  - {fileID: 11400000, guid: 84e9ef1b5fcf80746b487496ea1a0ab9, type: 2}
+  - {fileID: 11400000, guid: de514e54da5728042a2ed11745c93a46, type: 2}
   busyPhrase: 

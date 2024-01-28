@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffebb51524b406e9fbef93316d7bb69, type: 3}
   m_Name: Oldric
   m_EditorClassIdentifier: 
-  _quests: []
+  _quests:
+  - {fileID: 11400000, guid: 5d63b2118835f3a409d5191dd82b895e, type: 2}
+  - {fileID: 11400000, guid: 8d1a8bbf78bed91409977b3cddbe0b25, type: 2}
   busyPhrase: 
