@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GGJ.Inventory.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -92,7 +93,22 @@ namespace GGJ.Inventory
 
             return false;
         }
-        
+
+        public bool TryRemoveItem<TItem>(TItem item, int amount) where TItem : ItemInfo
+        {
+            int rightItemCount = _slots.Count(x => x.ItemInfo == item);
+            if (rightItemCount >= amount)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    TryRemoveItem(item);
+                }
+                return true;
+            }
+
+            return false;
+        }
+         
         public void MoveItemToCell(int draggedSlotIndex, int droppedSlotIndex)
         {
             InventorySlot draggedSlot = _slots[draggedSlotIndex];

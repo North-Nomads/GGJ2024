@@ -46,25 +46,8 @@ namespace GGJ.Quests
 
         public void SubmitCurrentQuest()
         {
-            // coroutine is debug only 
-            StartCoroutine(WaitSomeTime());
-
-            // remove items from inventory
-
-            IEnumerator WaitSomeTime()
-            {
-                yield return new WaitForSeconds(3f);
-
-                // Remove 
-                /*for (int i = 0; i < CurrentQuest.TargetQuantity; i++)
-                {
-                    inventory.TryRemoveItem<typeof()>();
-                }*/
-                
-
-                CurrentQuest = testQuest2;
-
-            }
+            inventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            //CurrentQuest = testQuest2;
         }
     }
 }
