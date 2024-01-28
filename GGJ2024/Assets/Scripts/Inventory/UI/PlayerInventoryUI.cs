@@ -146,8 +146,13 @@ namespace GGJ.Inventory.UI
             }
             int slotIndex = Array.IndexOf(_uiSlots, slotUI);
             InventorySlot slot = _playerInventory.Slots[slotIndex];
+
+            string itemDescription = slot.ItemInfo.Description;
+            string itemType = $"Тип Предмета: {slot.ItemInfo.GetItemTypeTranslated()}";
+            string rarityType = slot.ItemInfo.ItemType == ItemType.Quest ? string.Empty : $"Редкость: {slot.ItemInfo.GetRarityTypeTranslated()}";
+            string hintWindowDescription = $"{itemDescription}\n\n{itemType}\n{rarityType}";
                 
-            hintWindow.UpdateValues(slot.ItemInfo.Icon, slot.ItemInfo.Title, slot.ItemInfo.Description);
+            hintWindow.UpdateValues(slot.ItemInfo.Icon, slot.ItemInfo.Title, hintWindowDescription);
         }
     }
 }

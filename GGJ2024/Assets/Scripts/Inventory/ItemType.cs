@@ -3,6 +3,8 @@
     public enum ItemType
     {
         Fish,
+        Other,
+        Quest
         // TODO: Anything else
     }
 }
