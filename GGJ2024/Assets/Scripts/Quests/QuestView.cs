@@ -30,10 +30,15 @@ namespace GGJ.Quests
             _quest = quest;
             _goal = _quest.TargetQuantity;
             title.text = _quest.Title;
-            
+
+            if (quest.TargetQuantity == 0)
+            {
+                CheckQuestProgress(0);
+                return;
+            }
+
             goalText.text = $"{_quest.TargetItem.Title} 0/{_goal}";
             goalText.color = inProgressQuestFontColor;
-            
             CheckQuestProgress(0);
         }
 
