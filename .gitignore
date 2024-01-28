@@ -2,6 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+/GGJ2024/Assets/Imports/
 /GGJ2024/[Ll]ibrary/
 /GGJ2024/[Tt]emp/
 /GGJ2024/[Oo]bj/
@@ -9,6 +10,7 @@
 /GGJ2024/[Bb]uilds/
 /GGJ2024/[Ll]ogs/
 /GGJ2024/[Uu]ser[Ss]ettings/
+/GGJ2024/Assets/Imports/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

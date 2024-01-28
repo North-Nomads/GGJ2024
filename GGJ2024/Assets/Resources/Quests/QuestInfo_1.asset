@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876d3cb0f8aed484b9e0a52f3059ae12, type: 3}
+  m_Name: QuestInfo_1
+  m_EditorClassIdentifier: 
+  id: 0
+  targetItem: {fileID: 11400000, guid: fc1d3db2da9a6d7409c1d80ae2599118, type: 2}
+  targetQuantity: 1
+  recipient: {fileID: 11400000, guid: faf998d3d5225b747a35a149212595b0, type: 2}
+  title: "\u041B\u043E\u0432\u0443\u0448\u043A\u0430 \u0432 \u041A\u043B\u044E\u0447\u0430\u0445"
+  description: 
+  questFinishedText: 
+  speeches: []
