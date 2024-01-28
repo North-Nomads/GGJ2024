@@ -11,7 +11,6 @@ namespace GGJ.Quests
         [Tooltip("Amount of items to bring")] [SerializeField] private int targetQuantity;
         [Tooltip("Whom to bring items")][SerializeField] private QuestGiverInfo recipient;
 
-
         [Header("UI")]
         [SerializeField] private string title;
         [SerializeField] private string description;

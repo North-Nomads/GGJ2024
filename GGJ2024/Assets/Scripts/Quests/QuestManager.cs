@@ -7,6 +7,7 @@ namespace GGJ.Quests
 {
     public class QuestManager : MonoBehaviour
     {
+        [SerializeField] private PlayerInventory inventory;
         [SerializeField] private QuestInfo testQuest;
         [SerializeField] private QuestInfo testQuest2;
 
@@ -45,13 +46,24 @@ namespace GGJ.Quests
 
         public void SubmitCurrentQuest()
         {
-            // coroutine is debug only
+            // coroutine is debug only 
             StartCoroutine(WaitSomeTime());
+
+            // remove items from inventory
 
             IEnumerator WaitSomeTime()
             {
                 yield return new WaitForSeconds(3f);
+
+                // Remove 
+                /*for (int i = 0; i < CurrentQuest.TargetQuantity; i++)
+                {
+                    inventory.TryRemoveItem<typeof()>();
+                }*/
+                
+
                 CurrentQuest = testQuest2;
+
             }
         }
     }

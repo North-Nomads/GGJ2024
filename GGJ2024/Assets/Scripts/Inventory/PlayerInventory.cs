@@ -46,6 +46,9 @@ namespace GGJ.Inventory
 
         public IEnumerator test()
         {
+            if (testItem.Count == 0)
+                yield break;
+
             while (true)
             {
                 yield return new WaitForSeconds(3);
@@ -111,8 +114,8 @@ namespace GGJ.Inventory
             {
                 throw new Exception("This slot is not empty. Can't add item.");
             }
-            OnPlayerInventoryUpdated(this, item);
             slot.AddInSlot(item);
+            OnPlayerInventoryUpdated(this, item);
         }
         
         private void RemoveItem<TItem>(TItem item, InventorySlot slot) where TItem : ItemInfo

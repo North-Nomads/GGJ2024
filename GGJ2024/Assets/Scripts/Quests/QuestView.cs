@@ -11,7 +11,6 @@ namespace GGJ.Quests
 
         [SerializeField] private TMP_Text title;
         [SerializeField] private TMP_Text goalText;
-        [SerializeField] private string bringQuestTemplate;
         [SerializeField] private Color finishedQuestFontColor;
         [SerializeField] private Color inProgressQuestFontColor;
 
@@ -44,7 +43,8 @@ namespace GGJ.Quests
 
         public void CheckQuestProgress(int newValue)
         {
-            if (_goal <= newValue)
+            print($"Check progress {newValue}");
+            if (newValue >= _goal)
             {
                 goalText.text = _quest.FinishText;
                 goalText.color = finishedQuestFontColor;
@@ -60,7 +60,7 @@ namespace GGJ.Quests
 
         public void OnPlayerGotNewItem(object sender, ItemInfo newItem)
         {
-            print("New item");
+            print($"New item by {sender}");
             if (newItem == _quest.TargetItem)
                 CheckQuestProgress(CountAllOccurenciesOfType(newItem));
         }
@@ -68,16 +68,18 @@ namespace GGJ.Quests
         private int CountAllOccurenciesOfType(ItemInfo item)
         {
             int c = 0;
+            int i = 0;
             foreach (var slot in playerInventory.Slots)
             {
                 if (slot.ItemInfo == null) continue;
 
-                print($"{slot.ItemInfo.name}");
+                print($"{i}: {slot.ItemInfo.name}");
                 print($"{ item.name}");
 
                 if (slot.ItemInfo == item)
                     c++;
             }
+            print($"Total: {i}");
             return c;
         }
     }
