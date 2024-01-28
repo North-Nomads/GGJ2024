@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace GGJ.Quests
 {
+    [CreateAssetMenu(fileName = "New Quest Giver Info", menuName = "Quests/QuestGiver definition")]
     public class QuestGiverInfo : ScriptableObject
     {
         [SerializeField] private QuestInfo[] _quests;
