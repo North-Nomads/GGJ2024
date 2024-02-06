@@ -23,7 +23,7 @@ namespace GGJ.Infrastructure
                 return;
             }
 
-            _coroutineRunner.StartCoroutine(LoadScene(sceneName));
+            _coroutineRunner.StartCoroutine(LoadScene(sceneName, onLoaded));
         }
 
         private IEnumerator LoadScene(string sceneName, Action onLoaded = null)
