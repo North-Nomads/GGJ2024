@@ -7,6 +7,8 @@ namespace GGJ.Infrastructure.States
 {
     public class LoadProgressState : IState
     {
+        private const string InitialLevel = "Fountain";
+        
         private readonly GameStateMachine _stateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
@@ -34,6 +36,6 @@ namespace GGJ.Infrastructure.States
             _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
 
         private PlayerProgress NewProgress() => 
-            new(initialLevel: "Main");
+            new(initialLevel: InitialLevel);
     }
 }
