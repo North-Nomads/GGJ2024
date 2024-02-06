@@ -9,6 +9,7 @@ namespace GGJ.Infrastructure
         private void Awake()
         {
             _game = new Game(this);
+            DontDestroyOnLoad(this);
         }
     }
 }
