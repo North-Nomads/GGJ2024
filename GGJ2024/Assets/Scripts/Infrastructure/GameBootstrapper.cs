@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GGJ.Infrastructure.States;
+using UnityEngine;
 
 namespace GGJ.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace GGJ.Infrastructure
         private void Awake()
         {
             _game = new Game(this);
+            _game.StateMachine.EnterIn<BootstrapState>();
             DontDestroyOnLoad(this);
         }
     }

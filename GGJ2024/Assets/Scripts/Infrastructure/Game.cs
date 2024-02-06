@@ -5,13 +5,11 @@ namespace GGJ.Infrastructure
 {
     public class Game
     {
-        private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
+        public readonly GameStateMachine StateMachine;
 
         public Game(ICoroutineRunner coroutineRunner)
         {
-            _sceneLoader = new SceneLoader(coroutineRunner);
-            _stateMachine = new GameStateMachine(_sceneLoader, AllServices.Container);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), AllServices.Container);
         }
     }
 }
