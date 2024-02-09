@@ -135,7 +135,6 @@ MonoBehaviour:
   slotImage: {fileID: 4765585464962848663}
   canvasesToDisableOnEmpty:
   - {fileID: 5339002021759789757}
-  - {fileID: 7008296604779691083}
   - {fileID: 6635717457539711224}
   hoveringMask: {fileID: 2914908720121979026}
   selectingMask: {fileID: 2999058452454554080}
