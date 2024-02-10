@@ -877,6 +877,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2556930045709956594, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u0420\u041E\u0414\u0410\u0422\u042C\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 4736694766886697893, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -971,6 +975,10 @@ PrefabInstance:
       objectReference: {fileID: 3298200920823886002, guid: ecd8a40df8eaf6d4e8a3520416ebb79e, type: 2}
     - target: {fileID: 5986329189037329720, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094525681321738079, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7240375119812377112, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}

@@ -66,6 +66,14 @@ namespace GGJ.Inventory
             view.HandleInventoryView();
             
         }
+
+        public void OnConvertingFish(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                
+            }
+        }
         
         public bool TryAddItem<TItem>(TItem item) where TItem : ItemInfo
         {
