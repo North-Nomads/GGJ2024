@@ -1,18 +1,24 @@
 using GGJ.Inventory;
 using System;
 using System.Collections;
+using GGJ.Data;
+using GGJ.Dialogs;
+using GGJ.Infrastructure.Services.Services.SaveLoad;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GGJ.Quests
 {
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : MonoBehaviour, ISavedProgressWriter
     {
-        [SerializeField] private PlayerInventory inventory;
-        [SerializeField] private QuestInfo testQuest;
-        [SerializeField] private QuestInfo testQuest2;
+        [SerializeField] private DialogInputHandler dialogInputHandler;
+        [FormerlySerializedAs("inventory")] [SerializeField] private PlayerInventory playerInventory;
+        [SerializeField] private QuestInfo initialQuest;
 
-        private QuestInfo[] _allQuests;
+        private readonly QuestView _questView;
+
         private QuestInfo _currentQuest;
+        private QuestProgressChecker _questProgressChecker;
 
         public QuestInfo CurrentQuest
         {
@@ -23,30 +29,34 @@ namespace GGJ.Quests
                     if (value.Id <= _currentQuest.Id)
                         throw new ArgumentException($"Quest must increase. Was: {_currentQuest.Id}; Given: {value.Id}");
                 
-
                 _currentQuest = value;
-                OnQuestChanged(this, value);
+                QuestChanged?.Invoke(this, value);
             }
         }
 
-        public event EventHandler<QuestInfo> OnQuestChanged = delegate { };
-        public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
+        public QuestInfo LastCompletedQuest { get; private set; }
 
-        private void Start()
+        public bool IsCurrentQuestCompleted => _questProgressChecker.IsQuestCompleted;
+
+        public event EventHandler<QuestInfo> QuestChanged = delegate { };
+
+        public void SubmitCurrentQuest() => 
+            playerInventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+
+        public void Load(PlayerProgress progress)
         {
-            _allQuests = Resources.LoadAll<QuestInfo>("Quests/");
-            print($"Loaded {_allQuests.Length}");
-            TakeNewQuest(testQuest);
+            
         }
 
-        public void TakeNewQuest(QuestInfo quest)
+        public void Save(PlayerProgress progress)
         {
-            CurrentQuest = quest;
+            
         }
 
-        public void SubmitCurrentQuest()
+        private void Awake()
         {
-            inventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            LastCompletedQuest = initialQuest;
+            _questProgressChecker = new QuestProgressChecker(this, _questView, playerInventory);
         }
     }
 }
