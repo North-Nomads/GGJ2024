@@ -1,10 +1,13 @@
+using System;
+using GGJ.Dialogs;
 using GGJ.Inventory;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace GGJ.Quests
 {
     [CreateAssetMenu(fileName = "New Quest Info", menuName = "Quests/Quest definition")]
-    public class QuestInfo : ScriptableObject
+    public class QuestInfo : ScriptableObject, IComparable<QuestInfo>
     {
         [SerializeField] private int id;
         [Tooltip("Leave null if speach")] [SerializeField] private ItemInfo targetItem;
@@ -18,7 +21,7 @@ namespace GGJ.Quests
         [Header("Quest text")]
         [SerializeField] private string questFinishedText;
         [SerializeField] private string[] speeches;
-    
+
         // Basic info
         public int Id => id;
         public ItemInfo TargetItem => targetItem;
@@ -32,6 +35,6 @@ namespace GGJ.Quests
         // Quests speeches
         public string FinishText => questFinishedText;
         public string[] MonologSpeeches => speeches;
-
+        public int CompareTo(QuestInfo other) => Id.CompareTo(other.Id);
     }
 }
