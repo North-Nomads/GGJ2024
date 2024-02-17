@@ -1,6 +1,5 @@
 using GGJ.Inventory;
 using System;
-using System.Collections;
 using GGJ.Data;
 using GGJ.Dialogs;
 using GGJ.Infrastructure.Services.Services.SaveLoad;
@@ -11,11 +10,10 @@ namespace GGJ.Quests
 {
     public class QuestManager : MonoBehaviour, ISavedProgressWriter
     {
-        [SerializeField] private DialogInputHandler dialogInputHandler;
         [FormerlySerializedAs("inventory")] [SerializeField] private PlayerInventory playerInventory;
         [SerializeField] private QuestInfo initialQuest;
-
-        private readonly QuestView _questView;
+        
+        private QuestView _questView;
 
         private QuestInfo _currentQuest;
         private QuestProgressChecker _questProgressChecker;
@@ -25,7 +23,7 @@ namespace GGJ.Quests
             get => _currentQuest;
             set
             {
-                if (_currentQuest != null)
+                if (_currentQuest != null && value != null)
                     if (value.Id <= _currentQuest.Id)
                         throw new ArgumentException($"Quest must increase. Was: {_currentQuest.Id}; Given: {value.Id}");
                 
@@ -39,24 +37,41 @@ namespace GGJ.Quests
         public bool IsCurrentQuestCompleted => _questProgressChecker.IsQuestCompleted;
 
         public event EventHandler<QuestInfo> QuestChanged = delegate { };
+        public event EventHandler<QuestInfo> QuestCompleted = delegate { };
 
-        public void SubmitCurrentQuest() => 
+        public void Construct(QuestView questView)
+        {
+            _questView = questView;
+            _questProgressChecker = new QuestProgressChecker(this, _questView, playerInventory);
+        }
+
+        public void SubmitCurrentQuest()
+        {
             playerInventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            
+            LastCompletedQuest = CurrentQuest;
+            CurrentQuest = null;
+        }
 
         public void Load(PlayerProgress progress)
         {
+            if (progress.QuestData.LastCompletedQuest == null)
+                LastCompletedQuest = initialQuest;
+            else
+                LastCompletedQuest = progress.QuestData.LastCompletedQuest;
             
+            CurrentQuest = progress.QuestData.CurrentQuest;
         }
 
         public void Save(PlayerProgress progress)
         {
-            
+            progress.QuestData.LastCompletedQuest = LastCompletedQuest;
+            progress.QuestData.CurrentQuest = CurrentQuest;
         }
 
         private void Awake()
         {
             LastCompletedQuest = initialQuest;
-            _questProgressChecker = new QuestProgressChecker(this, _questView, playerInventory);
         }
     }
 }
