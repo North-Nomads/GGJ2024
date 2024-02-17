@@ -20,6 +20,7 @@ namespace GGJ.Quests
 
         [Header("Quest text")]
         [SerializeField] private string questFinishedText;
+        [SerializeField] private string questGiverFinishedText;
         [SerializeField] private string[] speeches;
 
         // Basic info
@@ -34,6 +35,7 @@ namespace GGJ.Quests
         
         // Quests speeches
         public string FinishText => questFinishedText;
+        public string QuestGiverFinishText => questGiverFinishedText;
         public string[] MonologSpeeches => speeches;
         public int CompareTo(QuestInfo other) => Id.CompareTo(other.Id);
     }
