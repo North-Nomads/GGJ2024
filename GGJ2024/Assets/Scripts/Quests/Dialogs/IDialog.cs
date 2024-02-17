@@ -7,11 +7,13 @@ namespace GGJ.Dialogs
 {
     public interface IDialog
     {
-        event Action<DialogType> DialogStarted;
-        event Action<DialogType> DialogEnded;
+        event Action DialogStarted;
+        event Action DialogEnded;
+        event Action PhraseStarted;
+        event Action PhraseEnded;
 
         void Initialize(GameObject character, DialogView dialogView);
-        IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants, DialogType dialogType);
-        void ShowPhrase(ICoroutineRunner coroutineRunner, string title, string dialogVariant);
+        IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants);
+        IEnumerator ShowPhrase(ICoroutineRunner coroutineRunner, string title, string dialogVariant);
     }
 }

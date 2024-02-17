@@ -13,8 +13,10 @@ namespace GGJ.Dialogs
         private DialogView _dialogView;
         private string _currentDialogVariant;
         
-        public event Action<DialogType> DialogStarted;
-        public event Action<DialogType> DialogEnded;
+        public event Action DialogStarted;
+        public event Action DialogEnded;
+        public event Action PhraseStarted;
+        public event Action PhraseEnded;
 
         public void Initialize(GameObject character, DialogView dialogView)
         {
@@ -25,9 +27,9 @@ namespace GGJ.Dialogs
             _dialogView.Initialize(this);
         }
         
-        public IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants, DialogType dialogType)
+        public IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants)
         {
-            DialogStarted?.Invoke(dialogType);
+            DialogStarted?.Invoke();
             
             _dialogView.Title = title;
 
@@ -41,11 +43,25 @@ namespace GGJ.Dialogs
             _dialogView.Text = String.Empty;
             _dialogView.Title = String.Empty;
             
-            DialogEnded?.Invoke(dialogType);
+            DialogEnded?.Invoke();
         }
 
-        public void ShowPhrase(ICoroutineRunner coroutineRunner, string title, string phrase) => 
+        public IEnumerator ShowPhrase(ICoroutineRunner coroutineRunner, string title, string phrase)
+        {
+            PhraseStarted?.Invoke();
+            
+            _dialogView.gameObject.SetActive(true);
+            _dialogView.Title = title;
+            
             _dialogRoutine = coroutineRunner.StartCoroutine(WriteDialog(phrase));
+
+            while (_dialogRoutine != null)
+                yield return null;
+            
+            _dialogView.gameObject.SetActive(false);
+            
+            PhraseEnded?.Invoke();
+        }
 
         private IEnumerator WriteDialog(string text)
         {
@@ -66,9 +82,11 @@ namespace GGJ.Dialogs
 
         private void OnDialogVariantSkip()
         {
-            if (_dialogRoutine != null && _currentDialogVariant != _dialogView.Text)
+            if (_dialogRoutine == null) return;
+            
+            if (_currentDialogVariant != _dialogView.Text)
                 _dialogView.Text = _currentDialogVariant;
-            else if (_dialogRoutine != null && _currentDialogVariant == _dialogView.Text)
+            else if (_currentDialogVariant == _dialogView.Text)
                 _dialogRoutine = null;
         }
     }

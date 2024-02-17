@@ -25,8 +25,8 @@ namespace GGJ.Dialogs
 
         public void Initialize(QuestDialog questDialog)
         {
-            questDialog.DialogStarted += (dialogType) => { gameObject.SetActive(true); };
-            questDialog.DialogEnded += (dialogType) => { gameObject.SetActive(false); };
+            questDialog.DialogStarted += () => { gameObject.SetActive(true); };
+            questDialog.DialogEnded += () => { gameObject.SetActive(false); };
         }
     }
 }

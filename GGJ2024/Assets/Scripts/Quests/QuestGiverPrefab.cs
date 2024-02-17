@@ -38,6 +38,15 @@ namespace GGJ.Quests
             }
         }
 
+        private bool IsDialogContinues
+        {
+            set
+            {
+                _isDialogContinues = value;
+                talkHint.gameObject.SetActive(!value);
+            }
+        }
+
         public void Construct(GameObject character)
         {
             if (character.TryGetComponent(out QuestManager questManager)) 
@@ -48,8 +57,11 @@ namespace GGJ.Quests
             
             _questDialog = new QuestDialog();
             _questDialog.Initialize(character, dialogView);
+            
             _questDialog.DialogStarted += OnQuestDialogStarted;
             _questDialog.DialogEnded += OnQuestDialogEnded;
+            _questDialog.PhraseStarted += OnPhraseStarted;
+            _questDialog.PhraseEnded += OnPhraseEnded;
         }
 
         private void OnEnable()
@@ -77,16 +89,16 @@ namespace GGJ.Quests
         }
 
         private void ShowBusyPhrase() =>
-            StartCoroutine(_questDialog.ShowDialog(this, 
-                questGiverInfo.name, new [] {questGiverInfo.BusyPhrase}, DialogType.Busy));
+            StartCoroutine(_questDialog.ShowPhrase(this,
+                questGiverInfo.name, questGiverInfo.BusyPhrase));
 
         private void ShowQuestDialog() => 
             StartCoroutine(_questDialog.ShowDialog(this, 
-                questGiverInfo.name, _currentQuest.MonologSpeeches, DialogType.Quest));
+                questGiverInfo.name, _currentQuest.MonologSpeeches));
 
-        private void ShowCompletedPhrase() => 
-            StartCoroutine(_questDialog.ShowDialog(this, 
-                questGiverInfo.name, new[] {_questManager.CurrentQuest.QuestGiverFinishText}, DialogType.Complete));
+        private void ShowCompletedPhrase() =>
+            StartCoroutine(_questDialog.ShowPhrase(this,
+                questGiverInfo.name, _questManager.CurrentQuest.QuestGiverFinishText));
 
         private void StartQuest()
         {
@@ -108,21 +120,16 @@ namespace GGJ.Quests
             _currentQuest = null;
         }
 
-        private void OnQuestDialogStarted(DialogType dialogType)
+        private void OnQuestDialogStarted() => IsDialogContinues = true;
+
+        private void OnQuestDialogEnded()
         {
-            _isDialogContinues = true;
-            talkHint.gameObject.SetActive(false);
+            IsDialogContinues = false;
+            _questManager.CurrentQuest = _currentQuest;
         }
 
-
-        private void OnQuestDialogEnded(DialogType dialogType)
-        {
-            _isDialogContinues = false;
-            talkHint.gameObject.SetActive(true);
-            
-            if (dialogType == DialogType.Quest)
-                _questManager.CurrentQuest = _currentQuest;
-        }
+        private void OnPhraseStarted() => IsDialogContinues = true;
+        private void OnPhraseEnded() => IsDialogContinues = false;
 
         private void TriggerEntered(Collider other)
         {
