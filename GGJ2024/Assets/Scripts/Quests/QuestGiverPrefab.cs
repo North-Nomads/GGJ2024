@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Linq;
 using GGJ.Dialogs;
 using GGJ.Infrastructure;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GGJ.Quests
 {
@@ -30,14 +27,14 @@ namespace GGJ.Quests
 
         private bool IsPlayerAlreadyHaveQuest => _questManager.CurrentQuest != null;
         private bool HaveAvailableQuests => questGiverInfo.Quests.Any(quest => quest.Id > _questManager.LastCompletedQuest.Id);
+        private bool IsQuestGiverRecipient => IsPlayerAlreadyHaveQuest && _questManager.CurrentQuest.Recipient == questGiverInfo;
         private bool IsPlayerCompletedQuest => _questManager.IsCurrentQuestCompleted && questGiverInfo.GetQuestWithID(_questManager.CurrentQuest.Id);
         private bool IsPlayerInTalkRadius
         {
-            get => _isPlayerInTalkRadius;
             set
             {
                 _isPlayerInTalkRadius = value;
-                ToggleTalkHint(_isPlayerInTalkRadius);
+                talkHint.gameObject.SetActive(value);
             }
         }
 
@@ -71,7 +68,7 @@ namespace GGJ.Quests
         {
             if (!_isPlayerInTalkRadius || _isDialogContinues) return;
             
-            if (IsPlayerCompletedQuest)
+            if (IsPlayerCompletedQuest && IsQuestGiverRecipient)
                 CompleteQuest();
             else if (IsPlayerAlreadyHaveQuest || !HaveAvailableQuests)
                 ShowBusyPhrase();
@@ -86,11 +83,14 @@ namespace GGJ.Quests
             StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, _currentQuest.MonologSpeeches, DialogType.Quest));
 
         private void ShowCompletedPhrase() => 
-            StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, new[] {_currentQuest.QuestGiverFinishText}, DialogType.Complete));
+            StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, new[] {_questManager.CurrentQuest.QuestGiverFinishText}, DialogType.Complete));
 
         private void StartQuest()
         {
-            if (questGiverInfo.TryGetNextQuest(_questManager.LastCompletedQuest, out _currentQuest))
+            bool isNextQuestGot = 
+                questGiverInfo.TryGetNextQuest(_questManager.LastCompletedQuest, out _currentQuest);
+            
+            if (isNextQuestGot)
                 ShowQuestDialog();
             else
                 ShowBusyPhrase();
@@ -123,12 +123,8 @@ namespace GGJ.Quests
 
         private void TriggerEntered(Collider other)
         {
-            Debug.Log("Trigger entered");
-            if (other.CompareTag(PlayerTag))
-            {
-                Debug.Log("Compared Tag");
+            if (other.CompareTag(PlayerTag)) 
                 IsPlayerInTalkRadius = true;
-            }
         }
 
         private void TriggerExited(Collider other)
@@ -136,8 +132,5 @@ namespace GGJ.Quests
             if (other.CompareTag(PlayerTag))
                 IsPlayerInTalkRadius = false;
         }
-
-        private void ToggleTalkHint(bool value) => 
-            talkHint.gameObject.SetActive(value);
     }
 }
