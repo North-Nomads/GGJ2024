@@ -1,6 +1,4 @@
-﻿using Microsoft.Unity.VisualStudio.Editor;
-
-namespace GGJ.Infrastructure.Services
+﻿namespace GGJ.Infrastructure.Services
 {
     public class AllServices
     {

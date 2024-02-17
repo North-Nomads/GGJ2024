@@ -9,8 +9,8 @@ namespace GGJ.Infrastructure.Factories
     {
         private readonly IAssetProvider _assetProvider;
 
-        public List<ISavedProgressWriter> ProgressWriters { get; } = new List<ISavedProgressWriter>();
-        public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
+        public List<ISavedProgressWriter> ProgressWriters { get; } = new();
+        public List<ISavedProgressReader> ProgressReaders { get; } = new();
         
         public GameFactory(IAssetProvider assetProvider)
         {
@@ -20,8 +20,11 @@ namespace GGJ.Infrastructure.Factories
         public GameObject CreateCharacter(Vector3 at) => 
             _assetProvider.Instantiate(AssetPath.CharacterPath, at);
 
-        public GameObject CreateHud() => 
-            _assetProvider.Instantiate(AssetPath.HudPath);
+        public GameObject CreateQuestCanvas() => 
+            InstantiateRegistered(AssetPath.QuestCanvasPath);
+
+        public GameObject CreateInventoryCanvas() => 
+            InstantiateRegistered(AssetPath.InventoryCanvasPath);
 
         public void CleanUp()
         {
