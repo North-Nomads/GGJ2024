@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace GGJ.Dialogs
 {
+    [RequireComponent(typeof(RectTransform))]
+    [RequireComponent(typeof(CanvasLookToCamera))]
     public class DialogView : MonoBehaviour
     {
         [SerializeField] private TMP_Text titleField;
@@ -14,11 +16,17 @@ namespace GGJ.Dialogs
             get => titleField.text;
             set => titleField.text = value;
         }
-        
+
         public string Text
         {
             get => textField.text;
             set => textField.text = value;
+        }
+
+        public void Initialize(QuestDialog questDialog)
+        {
+            questDialog.DialogStarted += (dialogType) => { gameObject.SetActive(true); };
+            questDialog.DialogEnded += (dialogType) => { gameObject.SetActive(false); };
         }
     }
 }
