@@ -1,4 +1,5 @@
-﻿using GGJ.Inventory;
+﻿using System;
+using GGJ.Inventory;
 using UnityEngine;
 
 namespace GGJ.Quests
@@ -13,20 +14,22 @@ namespace GGJ.Quests
         private int _goalValue;
 
         public QuestInfo CurrentQuest => _currentQuest;
-        public bool IsQuestCompleted => CurrentQuest != null && _currentValue >= _goalValue;
+        public bool IsQuestCompleted => CurrentQuest != null && _currentValue >= CurrentQuest.TargetQuantity;
 
         public QuestProgressChecker(QuestManager questManager, QuestView questView, PlayerInventory playerInventory)
         {
             _questView = questView;
             _playerInventory = playerInventory;
 
-            //questManager.QuestChanged += SetNewQuest;
+            questManager.QuestChanged += SetNewQuest;
             playerInventory.OnPlayerInventoryUpdated += OnPlayerGotNewItem;
         }
 
         private void OnPlayerGotNewItem(object sender, ItemInfo itemInfo)
         {
-            if (itemInfo == _currentQuest.TargetItem || itemInfo is null)
+            if (_currentQuest is null) return;
+            
+            if (itemInfo is null || itemInfo == _currentQuest.TargetItem)
                 CheckQuestProgress(CountAllOccurenciesOfType(itemInfo));
         }
 
@@ -41,14 +44,21 @@ namespace GGJ.Quests
             }
             else
             {
-                _questView.GoalText = $"{_currentQuest.TargetItem.Title} {_currentValue}/{_goalValue}";
+                _questView.GoalText = $"{_currentQuest.TargetItem.Title} {_currentValue}/{_currentQuest.TargetQuantity}";
             }
         }
 
         private void SetNewQuest(object sender, QuestInfo quest)
         {
-            Debug.Log($"Set new quest {quest.Title}");
             _currentQuest = quest;
+
+            if (_currentQuest == null)
+            {
+                _questView.gameObject.SetActive(false);
+                return;
+            }
+            
+            _questView.gameObject.SetActive(true);
             _questView.GoalText = _currentQuest.TargetQuantity.ToString();
             _questView.Title = _currentQuest.Title;
 
@@ -57,10 +67,10 @@ namespace GGJ.Quests
                 CheckQuestProgress(0);
                 return;
             }
-
-            _questView.GoalText = $"{_currentQuest.TargetItem.Title} {_currentValue}/{_goalValue}";
+            
+            _questView.GoalText = $"{_currentQuest.TargetItem.Title} {_currentValue}/{_currentQuest.TargetQuantity}";
             _questView.SetGoalTextColor(_questView.InProgressQuestFontColor);
-            CheckQuestProgress(0);
+            CheckQuestProgress(CountAllOccurenciesOfType(_currentQuest.TargetItem));
         }
 
         private int CountAllOccurenciesOfType(ItemInfo item)
@@ -71,7 +81,7 @@ namespace GGJ.Quests
                 if (slot.ItemInfo == null) 
                     continue;
 
-                if (slot.ItemInfo == item)
+                if (slot.ItemInfo.name == item.name)
                     correctItemCount++;
                 
                 Debug.Log($"{item.name}");
