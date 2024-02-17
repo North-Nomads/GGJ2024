@@ -13,8 +13,8 @@ namespace GGJ.Dialogs
         private DialogView _dialogView;
         private string _currentDialogVariant;
         
-        public event Action DialogStarted;
-        public event Action DialogEnded;
+        public event Action<DialogType> DialogStarted;
+        public event Action<DialogType> DialogEnded;
 
         public void Initialize(GameObject character, DialogView dialogView)
         {
@@ -22,11 +22,14 @@ namespace GGJ.Dialogs
                 dialogInputHandler.DialogVariantSkipButtonPressed += OnDialogVariantSkip;
 
             _dialogView = dialogView;
+            _dialogView.Initialize(this);
         }
         
-        public IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants)
+        public IEnumerator ShowDialog(ICoroutineRunner coroutineRunner, string title, string[] dialogVariants, DialogType dialogType)
         {
-            DialogStarted?.Invoke();
+            DialogStarted?.Invoke(dialogType);
+            
+            _dialogView.Title = title;
 
             foreach (string dialogVariant in dialogVariants)
             {
@@ -36,8 +39,9 @@ namespace GGJ.Dialogs
                     yield return null;
             }
             _dialogView.Text = String.Empty;
+            _dialogView.Title = String.Empty;
             
-            DialogEnded?.Invoke();
+            DialogEnded?.Invoke(dialogType);
         }
 
         public void ShowPhrase(ICoroutineRunner coroutineRunner, string title, string phrase) => 
