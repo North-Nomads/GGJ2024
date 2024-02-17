@@ -13,6 +13,7 @@ namespace GGJ.Quests
         [Tooltip("Leave null if speach")] [SerializeField] private ItemInfo targetItem;
         [Tooltip("Amount of items to bring")] [SerializeField] private int targetQuantity;
         [Tooltip("Whom to bring items")][SerializeField] private QuestGiverInfo recipient;
+        [SerializeField] private bool needToRemoveItems;
 
         [Header("UI")]
         [SerializeField] private string title;
@@ -28,6 +29,7 @@ namespace GGJ.Quests
         public ItemInfo TargetItem => targetItem;
         public int TargetQuantity => targetQuantity;
         public QuestGiverInfo Recipient => recipient;
+        public bool NeedToRemoveItems => needToRemoveItems;
 
         // UI information
         public string Title => title;

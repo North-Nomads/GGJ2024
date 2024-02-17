@@ -45,9 +45,10 @@ namespace GGJ.Quests
             _questProgressChecker = new QuestProgressChecker(this, _questView, playerInventory);
         }
 
-        public void SubmitCurrentQuest()
+        public void SubmitCurrentQuest(bool needToRemoveItems)
         {
-            playerInventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            if (needToRemoveItems && _currentQuest.TargetItem != null)
+                playerInventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
             
             LastCompletedQuest = CurrentQuest;
             CurrentQuest = null;

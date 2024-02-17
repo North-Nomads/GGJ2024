@@ -77,13 +77,16 @@ namespace GGJ.Quests
         }
 
         private void ShowBusyPhrase() =>
-            StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, new [] {questGiverInfo.BusyPhrase}, DialogType.Busy));
+            StartCoroutine(_questDialog.ShowDialog(this, 
+                questGiverInfo.name, new [] {questGiverInfo.BusyPhrase}, DialogType.Busy));
 
         private void ShowQuestDialog() => 
-            StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, _currentQuest.MonologSpeeches, DialogType.Quest));
+            StartCoroutine(_questDialog.ShowDialog(this, 
+                questGiverInfo.name, _currentQuest.MonologSpeeches, DialogType.Quest));
 
         private void ShowCompletedPhrase() => 
-            StartCoroutine(_questDialog.ShowDialog(this, questGiverInfo.name, new[] {_questManager.CurrentQuest.QuestGiverFinishText}, DialogType.Complete));
+            StartCoroutine(_questDialog.ShowDialog(this, 
+                questGiverInfo.name, new[] {_questManager.CurrentQuest.QuestGiverFinishText}, DialogType.Complete));
 
         private void StartQuest()
         {
@@ -100,7 +103,7 @@ namespace GGJ.Quests
         {
             ShowCompletedPhrase();
             
-            _questManager.SubmitCurrentQuest();
+            _questManager.SubmitCurrentQuest(_questManager.CurrentQuest.NeedToRemoveItems);
             
             _currentQuest = null;
         }
