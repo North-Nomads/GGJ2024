@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.33694, g: 325.04984, b: 430.2193, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4359,7 +4359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questGiverInfo: {fileID: 11400000, guid: faf998d3d5225b747a35a149212595b0, type: 2}
   dialogView: {fileID: 979563283}
-  talkHint: {fileID: 224005451}
+  talkHint: {fileID: 979563286}
   triggerObserver: {fileID: 1633178681}
 --- !u!65 &331469018
 BoxCollider:
@@ -15576,7 +15576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1540335104389031126, guid: 1ed350e4bcd6c274abddf97c513112d2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3189987317739755681, guid: 1ed350e4bcd6c274abddf97c513112d2, type: 3}
       propertyPath: m_AnchorMax.y
