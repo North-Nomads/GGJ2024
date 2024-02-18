@@ -12,6 +12,7 @@ namespace GGJ.Inventory
     {
         [SerializeField] private PlayerInventoryUI view;
         [SerializeField] private InventoryGrid inventoryGrid;
+        [SerializeField] private LevelManager levelManager;
         
         [Header("Only for test")]
         [SerializeField] private List<ItemInfo> testItem;
@@ -20,6 +21,7 @@ namespace GGJ.Inventory
         private InventorySlot[] _slots;
 
         public InventoryGrid InventoryGrid => inventoryGrid;
+        public LevelManager LevelManager => levelManager;
         public int MaxCapacity => inventoryGrid.Width * inventoryGrid.Height;
         public IReadOnlyList<InventorySlot> Slots => _slots;
         public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
@@ -33,7 +35,7 @@ namespace GGJ.Inventory
                 _slots[cellIndex] = new InventorySlot();
             }
             
-            //view.Initialize(this);
+            view.Initialize(this);
 
             for (int i = 0; i < testItemCount; i++)
             {
@@ -64,6 +66,7 @@ namespace GGJ.Inventory
             Debug.Log(callbackContext.phase);
                
             view.HandleInventoryView();
+            
         }
 
         public void OnConvertFish(InputAction.CallbackContext context)
@@ -94,6 +97,7 @@ namespace GGJ.Inventory
             {
                 if (slot.ItemInfo is not null)
                 {
+                    LevelManager.XPGained(slot.ItemInfo.FishXp);
                     RemoveItem(slot.ItemInfo, slot);
                     return true;
                 }

@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Dialog (Skip)",
-                    "type": "Button",
-                    "id": "0088db5a-e6be-485a-8445-7b6ec8781f0f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -135,17 +126,6 @@
                     "action": "Achievements (Open/Close)",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c075786-507e-495c-8cef-eb7bd5ce4f81",
-                    "path": "<Keyboard>/f",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dialog (Skip)",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -166,6 +146,15 @@
                     "name": "UI (Close)",
                     "type": "Button",
                     "id": "850410d2-6695-4fce-b147-df1884a65532",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ConvertFish",
+                    "type": "Button",
+                    "id": "24c966f8-f3ae-4cae-b1ea-71321c520d20",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
@@ -203,6 +192,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "UI (Close)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e31d900-1821-4288-9106-b33307363374",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConvertFish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
