@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7296703663896954801}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,6 +183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fisherman (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -205,6 +209,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9047014418611360420}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4681424293963993291}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4832237851714818187}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4427568672237030943}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4864857967436731520}
   m_SourcePrefab: {fileID: 100100000, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}
 --- !u!4 &6973161678491880283 stripped
 Transform:
@@ -337,6 +353,34 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d9c48065-6811-46ed-a266-c1302b63920d
     m_ActionName: Player/Achievements (Open/Close)[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4681424293963993291}
+        m_TargetAssemblyTypeName: GGJ.Dialogs.DialogInputHandler, Assembly-CSharp
+        m_MethodName: OnDialogStartButtonPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4681424293963993291}
+        m_TargetAssemblyTypeName: GGJ.Dialogs.DialogInputHandler, Assembly-CSharp
+        m_MethodName: OnDialogVariantSkipButtonPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0088db5a-e6be-485a-8445-7b6ec8781f0f
+    m_ActionName: Player/Dialog (Skip)[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -379,8 +423,9 @@ MonoBehaviour:
   inventoryGrid:
     width: 4
     height: 4
-  testItem: []
-  testItemCount: 0
+  testItem:
+  - {fileID: 11400000, guid: 2e65b9435e46bba4580dbd39d7f7b074, type: 2}
+  testItemCount: 1
 --- !u!114 &1668449801312484575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +545,80 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &4681424293963993291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750260881347334625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3133e30a3454d80a6174c18f8fdc825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4832237851714818187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750260881347334625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b000b20aadf49e9b96110f5e670d5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInventory: {fileID: 2931896635013627578}
+  initialQuest: {fileID: 11400000, guid: 582c30f8069d40741854625b7cc60e70, type: 2}
+--- !u!65 &4427568672237030943
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750260881347334625}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 100, y: 200, z: 100}
+  m_Center: {x: 0, y: 100, z: 0}
+--- !u!54 &4864857967436731520
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750260881347334625}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &8446738456096352092 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1330755669629619180, guid: 11b13db873a43d744ba5ea7320a268b3, type: 3}

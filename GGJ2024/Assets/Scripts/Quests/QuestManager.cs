@@ -1,52 +1,78 @@
 using GGJ.Inventory;
 using System;
-using System.Collections;
+using GGJ.Data;
+using GGJ.Dialogs;
+using GGJ.Infrastructure.Services.Services.SaveLoad;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GGJ.Quests
 {
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : MonoBehaviour, ISavedProgressWriter
     {
-        [SerializeField] private PlayerInventory inventory;
-        [SerializeField] private QuestInfo testQuest;
-        [SerializeField] private QuestInfo testQuest2;
+        [FormerlySerializedAs("inventory")] [SerializeField] private PlayerInventory playerInventory;
+        [SerializeField] private QuestInfo initialQuest;
+        
+        private QuestView _questView;
 
-        private QuestInfo[] _allQuests;
         private QuestInfo _currentQuest;
+        private QuestProgressChecker _questProgressChecker;
 
         public QuestInfo CurrentQuest
         {
             get => _currentQuest;
             set
             {
-                if (_currentQuest != null)
+                if (_currentQuest != null && value != null)
                     if (value.Id <= _currentQuest.Id)
                         throw new ArgumentException($"Quest must increase. Was: {_currentQuest.Id}; Given: {value.Id}");
                 
-
                 _currentQuest = value;
-                OnQuestChanged(this, value);
+                QuestChanged?.Invoke(this, value);
             }
         }
 
-        public event EventHandler<QuestInfo> OnQuestChanged = delegate { };
-        public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
+        public QuestInfo LastCompletedQuest { get; private set; }
 
-        private void Start()
+        public bool IsCurrentQuestCompleted => _questProgressChecker.IsQuestCompleted;
+
+        public event EventHandler<QuestInfo> QuestChanged = delegate { };
+        public event EventHandler<QuestInfo> QuestCompleted = delegate { };
+
+        public void Construct(QuestView questView)
         {
-            _allQuests = Resources.LoadAll<QuestInfo>("Quests/");
-            print($"Loaded {_allQuests.Length}");
-            TakeNewQuest(testQuest);
+            _questView = questView;
+            _questProgressChecker = new QuestProgressChecker(this, _questView, playerInventory);
         }
 
-        public void TakeNewQuest(QuestInfo quest)
+        public void SubmitCurrentQuest(bool needToRemoveItems)
         {
-            CurrentQuest = quest;
+            if (needToRemoveItems && _currentQuest.TargetItem != null)
+                playerInventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            
+            LastCompletedQuest = CurrentQuest;
+            CurrentQuest = null;
         }
 
-        public void SubmitCurrentQuest()
+        public void Load(PlayerProgress progress)
         {
-            inventory.TryRemoveItem(_currentQuest.TargetItem, _currentQuest.TargetQuantity);
+            if (progress.QuestData.LastCompletedQuest == null)
+                LastCompletedQuest = initialQuest;
+            else
+                LastCompletedQuest = progress.QuestData.LastCompletedQuest;
+            
+            CurrentQuest = progress.QuestData.CurrentQuest;
+        }
+
+        public void Save(PlayerProgress progress)
+        {
+            progress.QuestData.LastCompletedQuest = LastCompletedQuest;
+            progress.QuestData.CurrentQuest = CurrentQuest;
+        }
+
+        private void Awake()
+        {
+            LastCompletedQuest = initialQuest;
         }
     }
 }

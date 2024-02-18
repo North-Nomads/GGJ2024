@@ -1,8 +1,13 @@
-﻿using GGJ.Infrastructure.Factories;
+﻿using System;
+using GGJ.Dialogs;
+using GGJ.Infrastructure.Factories;
 using GGJ.Infrastructure.Services.Services.PersistentProgress;
 using GGJ.Infrastructure.Services.Services.SaveLoad;
 using GGJ.Infrastructure.States.Interfaces;
+using GGJ.Inventory.UI;
+using GGJ.Quests;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace GGJ.Infrastructure.States
 {
@@ -40,8 +45,26 @@ namespace GGJ.Infrastructure.States
         private void InitGameWorld()
         {
             _gameFactory.CleanUp();
-            _gameFactory.CreateCharacter(GameObject.FindGameObjectWithTag(InitialCharacterPointTag).transform.position);
-            _gameFactory.CreateHud();
+            GameObject character = _gameFactory.CreateCharacter(GameObject.FindGameObjectWithTag(InitialCharacterPointTag).transform.position).transform.GetChild(0).gameObject;
+            QuestView questView = _gameFactory.CreateQuestCanvas().GetComponentInChildren<QuestView>();
+            //_gameFactory.CreateInventoryCanvas();
+
+            InitQuestGivers(character);
+            InitHud(character, questView);
+        }
+
+        private void InitHud(GameObject character, QuestView questView)
+        {
+            if (character.TryGetComponent(out QuestManager questManager)) 
+                questManager.Construct(questView);
+        }
+
+        private void InitQuestGivers(GameObject character)
+        {
+            QuestGiverPrefab[] questGivers =
+                Object.FindObjectsByType<QuestGiverPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            
+            Array.ForEach(questGivers, e => e.Construct(character));
         }
 
         private void InformProgressReaders()

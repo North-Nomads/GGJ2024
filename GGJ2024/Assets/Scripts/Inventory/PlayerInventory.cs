@@ -33,7 +33,7 @@ namespace GGJ.Inventory
                 _slots[cellIndex] = new InventorySlot();
             }
             
-            view.Initialize(this);
+            //view.Initialize(this);
 
             for (int i = 0; i < testItemCount; i++)
             {
@@ -64,7 +64,6 @@ namespace GGJ.Inventory
             Debug.Log(callbackContext.phase);
                
             view.HandleInventoryView();
-            
         }
 
         public void OnConvertFish(InputAction.CallbackContext context)

@@ -22,5 +22,8 @@ namespace GGJ.Infrastructure.AssetManagement
         /// <param name="at">Custom position</param>
         /// <returns>Instantiated <see cref="GameObject"/></returns>
         GameObject Instantiate(string path, Vector3 at);
+
+        TAsset[] LoadAllResources<TAsset>(string path) where TAsset : Object;
+        TAsset LoadResources<TAsset>(string path) where TAsset : Object;
     }
 }

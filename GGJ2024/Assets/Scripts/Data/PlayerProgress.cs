@@ -6,10 +6,12 @@ namespace GGJ.Data
     public class PlayerProgress
     {
         public WorldData WorldData { get; private set; }
+        public QuestData QuestData { get; private set; }
 
         public PlayerProgress(string initialLevel)
         {
             WorldData = new WorldData(initialLevel);
+            QuestData = new QuestData(null, null);
         }
     }
 }

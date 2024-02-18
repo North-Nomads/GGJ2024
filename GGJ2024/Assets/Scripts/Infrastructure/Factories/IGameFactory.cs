@@ -27,12 +27,9 @@ namespace GGJ.Infrastructure.Factories
         /// <param name="at">Next position on character</param>
         /// <returns>Character <see cref="GameObject"/></returns>
         GameObject CreateCharacter(Vector3 at);
-        
-        /// <summary>
-        /// Creates a HUD
-        /// </summary>
-        /// <returns>HUD <see cref="GameObject"/></returns>
-        GameObject CreateHud();
+
+        GameObject CreateInventoryCanvas();
+        GameObject CreateQuestCanvas();
         
         /// <summary>
         /// Cleans a <see cref="ProgressReaders"/> and <see cref="ProgressWriters"/> containers

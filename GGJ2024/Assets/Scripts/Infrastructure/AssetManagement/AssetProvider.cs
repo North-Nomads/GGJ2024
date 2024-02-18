@@ -15,5 +15,11 @@ namespace GGJ.Infrastructure.AssetManagement
             GameObject prefab = Resources.Load<GameObject>(path);
             return Object.Instantiate(prefab, at, Quaternion.identity);
         }
+
+        public TAsset[] LoadAllResources<TAsset>(string path) where TAsset : Object => 
+            Resources.LoadAll<TAsset>(path);
+
+        public TAsset LoadResources<TAsset>(string path) where TAsset : Object => 
+            Resources.Load<TAsset>(path);
     }
 }

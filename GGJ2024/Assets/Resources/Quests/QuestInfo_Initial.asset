@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cffebb51524b406e9fbef93316d7bb69, type: 3}
-  m_Name: Richard
+  m_Script: {fileID: 11500000, guid: 876d3cb0f8aed484b9e0a52f3059ae12, type: 3}
+  m_Name: QuestInfo_Initial
   m_EditorClassIdentifier: 
-  name: "\u0420\u0438\u0447\u0430\u0440\u0434"
-  quests:
-  - {fileID: 11400000, guid: 3d7b998ee6574514ca01c25dcc8c67cd, type: 2}
-  busyPhrase: "\u042F \u0437\u0430\u043D\u044F\u0442"
+  id: 0
+  targetItem: {fileID: 0}
+  targetQuantity: 0
+  recipient: {fileID: 0}
+  title: 
+  description: 
+  questFinishedText: 
+  speeches: []
