@@ -67,12 +67,12 @@ namespace GGJ.Inventory
             
         }
 
-        public void OnConvertingFish(InputAction.CallbackContext context)
+        public void OnConvertFish(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                
-            }
+            if (!context.performed)
+                return;
+            if (TryRemoveAllItem())
+                print(1);
         }
         
         public bool TryAddItem<TItem>(TItem item) where TItem : ItemInfo
@@ -86,6 +86,19 @@ namespace GGJ.Inventory
                 }
             }
 
+            return false;
+        }
+
+        public bool TryRemoveAllItem()
+        {
+            foreach (InventorySlot slot in _slots)
+            {
+                if (slot.ItemInfo is not null)
+                {
+                    RemoveItem(slot.ItemInfo, slot);
+                    return true;
+                }
+            }
             return false;
         }
 
