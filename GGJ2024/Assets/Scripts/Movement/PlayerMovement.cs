@@ -6,10 +6,12 @@ namespace GGJ.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {
+        private const string IsMoving = "IsMoving";
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotationSpeed;
         [SerializeField] private CinemachineFreeLook playerCamera;
         [SerializeField] private Transform player;
+        [SerializeField] private Animator animator;
 
         private Vector2 _userInput;
 
@@ -25,7 +27,6 @@ namespace GGJ.Movement
             }
         }
 
-
         public void HandleUserInput(InputAction.CallbackContext callbackContext)
         {
             _userInput = callbackContext.ReadValue<Vector2>();
@@ -34,7 +35,13 @@ namespace GGJ.Movement
         private void FixedUpdate()
         {
             if (_userInput == Vector2.zero)
+            {
+                animator.SetBool(IsMoving, false);
                 return;
+            }
+                
+
+            animator.SetBool(IsMoving, true);
 
             _rotationAngle = GetRotationAngle();
 
