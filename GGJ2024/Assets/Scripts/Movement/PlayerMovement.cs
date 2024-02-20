@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,10 +7,24 @@ namespace GGJ.Movement
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private float moveSpeed;
-        [SerializeField] private Transform playerCamera;
+        [SerializeField] private float rotationSpeed;
+        [SerializeField] private CinemachineFreeLook playerCamera;
         [SerializeField] private Transform player;
 
         private Vector2 _userInput;
+
+        private Vector3 _lookDirection;
+        private float _rotationAngle;
+
+        private Vector3 CameraLookDirection
+        {
+            get
+            {
+                _lookDirection = player.position - playerCamera.transform.position;
+                return new Vector3(_lookDirection.x, 0, _lookDirection.z).normalized;
+            }
+        }
+
 
         public void HandleUserInput(InputAction.CallbackContext callbackContext)
         {
@@ -21,18 +36,23 @@ namespace GGJ.Movement
             if (_userInput == Vector2.zero)
                 return;
 
-            float angle = 0f;
+            _rotationAngle = GetRotationAngle();
 
+            player.rotation = Quaternion.Lerp(player.rotation, GetTargetRotation(), Time.fixedDeltaTime * rotationSpeed);
+            transform.position += moveSpeed * Time.fixedDeltaTime * player.forward;
+
+            Quaternion GetTargetRotation() => Quaternion.Euler(0, _rotationAngle, 0) * Quaternion.LookRotation(CameraLookDirection);
+        }
+
+        private float GetRotationAngle()
+        {
             if (_userInput.y < 0f)
-                angle = 180f;
+                return 180f;
             else if (_userInput.x > 0f)
-                angle = 90f;
+                return 90f;
             else if (_userInput.x < 0f)
-                angle = -90f;
-
-
-            player.rotation = Quaternion.Euler(0, angle, 0);
-            transform.position += new Vector3(_userInput.x, 0, _userInput.y) * moveSpeed * Time.deltaTime;
+                return -90f;
+            return 0;
         }
     }
 }
