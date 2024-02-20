@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Cinemachine;
 using GGJ.Infrastructure.AssetManagement;
 using GGJ.Infrastructure.Services.Services.SaveLoad;
 using UnityEngine;
@@ -25,6 +27,9 @@ namespace GGJ.Infrastructure.Factories
 
         public GameObject CreateInventoryCanvas() => 
             InstantiateRegistered(AssetPath.InventoryCanvasPath);
+
+        public GameObject CreateCamera()
+            => _assetProvider.Instantiate(AssetPath.PlayerCamera);
 
         public void CleanUp()
         {
@@ -54,5 +59,6 @@ namespace GGJ.Infrastructure.Factories
             
             ProgressReaders.Add(progressReader);
         }
+
     }
 }

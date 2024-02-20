@@ -12,14 +12,18 @@ namespace GGJ.Movement
         [SerializeField] private float moveSpeed;
         [SerializeField] private float sprintSpeed;
         [SerializeField] private float rotationSpeed;
-        [SerializeField] private CinemachineFreeLook playerCamera;
         [SerializeField] private Transform player;
+        [SerializeField] private Transform cameraTarget;
         [SerializeField] private Animator animator;
 
+        private Transform _playerCamera;
         private Vector2 _userInput;
         private Vector3 _lookDirection;
         private float _rotationAngle;
         private float _currentSpeed;
+
+        public Transform CameraTargetPoint => cameraTarget;
+        public Transform PlayerCamera { get => _playerCamera; set => _playerCamera = value; }
 
         private void Start()
         {
@@ -30,7 +34,7 @@ namespace GGJ.Movement
         {
             get
             {
-                _lookDirection = player.position - playerCamera.transform.position;
+                _lookDirection = player.position - _playerCamera.position;
                 return new Vector3(_lookDirection.x, 0, _lookDirection.z).normalized;
             }
         }

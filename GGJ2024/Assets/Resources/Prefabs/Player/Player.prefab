@@ -1851,7 +1851,7 @@ Transform:
   - {fileID: 4890411041253004594}
   - {fileID: 2603776381061432348}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7712458843800522028
 MonoBehaviour:
@@ -1868,8 +1868,8 @@ MonoBehaviour:
   moveSpeed: 2
   sprintSpeed: 3
   rotationSpeed: 10
-  playerCamera: {fileID: 0}
   player: {fileID: 2603776381061432348}
+  cameraTarget: {fileID: 883250426058283749}
   animator: {fileID: 440178487402311897}
 --- !u!114 &7523349618831255757
 MonoBehaviour:
@@ -1962,8 +1962,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 1caa742b-d39e-4c98-abd8-448becf7316a
-    m_ActionName: Player/CameraY[/Mouse/delta/down,/Mouse/delta/up]
+    m_ActionId: 34f6e7c1-2fb1-4020-bfa5-f3ca950d6247
+    m_ActionName: Player/Sprint[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2509,6 +2509,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4ba0f3b7f5e162240a486959c8270e12, type: 3}
       propertyPath: m_Name
       value: fisherman
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ba0f3b7f5e162240a486959c8270e12, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

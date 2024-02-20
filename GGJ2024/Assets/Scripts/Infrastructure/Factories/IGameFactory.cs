@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GGJ.Infrastructure.Services;
 using GGJ.Infrastructure.Services.Services.SaveLoad;
 using UnityEngine;
@@ -35,5 +34,6 @@ namespace GGJ.Infrastructure.Factories
         /// Cleans a <see cref="ProgressReaders"/> and <see cref="ProgressWriters"/> containers
         /// </summary>
         void CleanUp();
+        GameObject CreateCamera();
     }
 }
