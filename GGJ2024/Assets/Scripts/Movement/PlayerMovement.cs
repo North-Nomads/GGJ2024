@@ -7,16 +7,24 @@ namespace GGJ.Movement
     public class PlayerMovement : MonoBehaviour
     {
         private const string IsMoving = "IsMoving";
+        private const string IsRunning = "IsRunning";
+
         [SerializeField] private float moveSpeed;
+        [SerializeField] private float sprintSpeed;
         [SerializeField] private float rotationSpeed;
         [SerializeField] private CinemachineFreeLook playerCamera;
         [SerializeField] private Transform player;
         [SerializeField] private Animator animator;
 
         private Vector2 _userInput;
-
         private Vector3 _lookDirection;
         private float _rotationAngle;
+        private float _currentSpeed;
+
+        private void Start()
+        {
+            _currentSpeed = moveSpeed;
+        }
 
         private Vector3 CameraLookDirection
         {
@@ -30,6 +38,19 @@ namespace GGJ.Movement
         public void HandleUserInput(InputAction.CallbackContext callbackContext)
         {
             _userInput = callbackContext.ReadValue<Vector2>();
+        }
+
+        public void HandleUserSprintInput(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.canceled)
+            {
+                animator.SetBool(IsRunning, false);
+                _currentSpeed = moveSpeed;
+                return;
+            }
+
+            animator.SetBool(IsRunning, true);
+            _currentSpeed = sprintSpeed;
         }
 
         private void FixedUpdate()
@@ -46,7 +67,7 @@ namespace GGJ.Movement
             _rotationAngle = GetRotationAngle();
 
             player.rotation = Quaternion.Lerp(player.rotation, GetTargetRotation(), Time.fixedDeltaTime * rotationSpeed);
-            transform.position += moveSpeed * Time.fixedDeltaTime * player.forward;
+            transform.position += _currentSpeed * Time.fixedDeltaTime * player.forward;
 
             Quaternion GetTargetRotation() => Quaternion.Euler(0, _rotationAngle, 0) * Quaternion.LookRotation(CameraLookDirection);
         }

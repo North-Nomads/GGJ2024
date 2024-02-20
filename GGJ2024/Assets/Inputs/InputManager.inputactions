@@ -78,13 +78,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "CameraY",
-                    "type": "Value",
-                    "id": "1caa742b-d39e-4c98-abd8-448becf7316a",
-                    "expectedControlType": "Axis",
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "34f6e7c1-2fb1-4020-bfa5-f3ca950d6247",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -233,47 +233,14 @@
                 },
                 {
                     "name": "",
-                    "id": "6b0808d5-d168-4594-8891-64a18235f23a",
-                    "path": "",
+                    "id": "d4cc6c96-b8cd-4156-9c26-d622691e7c7b",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CameraY",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "565b8800-08e1-4104-9199-7de88f25ac09",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraY",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "15a036af-e076-460e-9698-5141ad4f644f",
-                    "path": "<Mouse>/delta/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraY",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "e1896d38-ea45-4710-b542-c4cfef385bdc",
-                    "path": "<Mouse>/delta/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraY",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },

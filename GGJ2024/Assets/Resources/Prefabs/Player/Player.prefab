@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  sprintSpeed: 0
   rotationSpeed: 10
   playerCamera: {fileID: 0}
   player: {fileID: 4890411041253004594}
@@ -162,9 +163,9 @@ MonoBehaviour:
     m_ActionName: Player/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GGJ.Movement.CameraTarget, Assembly-CSharp
-        m_MethodName: HandleMouseInput
+      - m_Target: {fileID: 7712458843800522028}
+        m_TargetAssemblyTypeName: GGJ.Movement.PlayerMovement, Assembly-CSharp
+        m_MethodName: HandleUserSprintInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
