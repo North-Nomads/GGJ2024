@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace GGJ.Fishing.Minigames
 {
-	public class SimpleFishingMinigame : MinigameBase
+	public class SimpleFishingMinigame : MonoBehaviour
 	{
 		[SerializeField] private Image indicator;
 		[SerializeField] private RectTransform fish;
@@ -19,19 +19,21 @@ namespace GGJ.Fishing.Minigames
         private float _cd;
         private float _progress = 10;
 
+        public event System.EventHandler<bool> OnGameEnded;
+
         private void Update()
         {
             UpdateSpeed();
             MoveFish();
             if (_progress <= 0)
             {
-                OnLose();
-			    Destroy(gameObject);
+                OnGameEnded(this, false);
+                Destroy(gameObject);
             }
             else if (_progress >= 100)
             {
-                OnWin();
-			    Destroy(gameObject);
+                OnGameEnded(this, true);
+                Destroy(gameObject);
             }
             indicator.fillAmount = _progress / 100;
         }

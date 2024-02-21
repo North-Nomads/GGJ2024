@@ -1,3 +1,4 @@
+using GGJ.Fishing.Minigames;
 using GGJ.Inventory;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace GGJ.Fishing
         [SerializeField] private FishingEventProvider provider;
         [SerializeField] private float fishPullTime;
         [SerializeField] private Transform rodEnd;
+        [SerializeField] private SimpleFishingMinigame minigame;
         
         private LineRenderer _fishingLineRenderer;
         private Animator _animationController;
@@ -30,33 +32,35 @@ namespace GGJ.Fishing
 
         private void Update()
         {
-            _fishingLineRenderer.SetPosition(0, rodEnd.position);
+            _fishingLineRenderer.SetPosition(0, rodEnd.position); 
             _fishingLineRenderer.SetPosition(1, provider.transform.position);
         }
 
-        public async void OnFishingCast(InputAction.CallbackContext context)
+        public void OnFishingCast(InputAction.CallbackContext context)
         {
             if (_suppressFishing || !context.performed)
                 return;
             _suppressFishing = true;
+            StartCoroutine(CastRod());
+        }
+
+        private IEnumerator CastRod()
+        {
             _animationController.SetTrigger("Cast");
-            await Task.Delay(2000);
+            yield return new WaitForSeconds(2);
             _fishingLineRenderer.enabled = true;
             // Just wait for the fish.
-            await Task.Delay(Random.Range(13000, 18000));
-            var minigame = Instantiate(provider.GetRandomGame());
-            bool win = await minigame.StartGameAsync();
-            if (win)
+            yield return new WaitForSeconds(Random.Range(3, 13));
+            var game = Instantiate(minigame);
+            game.OnGameEnded += (s, e) =>
             {
-                var caught = Instantiate(provider.GetRandomCatchable(), provider.transform.position, Quaternion.identity);
-                // Do something, maybe in coroutine.
-                StartCoroutine(PullFish(caught));
-            }
-            else
-            {
-                // Do something on catch end.
-                Debug.Log("Player is noob so he couldn't catch the fish.");
-            }
+                if (e)
+                {
+                    var caught = Instantiate(provider.GetRandomCatchable(), provider.transform.position, Quaternion.identity);
+                    // Do something, maybe in coroutine.
+                    StartCoroutine(PullFish(caught));
+                }
+            };
             _fishingLineRenderer.enabled = false;
             _suppressFishing = false;
         }
