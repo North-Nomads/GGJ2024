@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 261.8995, g: 324.45413, b: 429.43256, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -564,7 +564,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 988123594}
-        m_TargetAssemblyTypeName: GGJ.Inventory.PlayerInventory, Inventory
+        m_TargetAssemblyTypeName: GGJ.Inventory.PlayerInventory, Assembly-CSharp
         m_MethodName: OnConvertFish
         m_Mode: 0
         m_Arguments:
@@ -575,8 +575,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 5439de1f-41f7-4b13-b1db-b4b4394e9e27
-    m_ActionName: Player/ConvertFish[/Keyboard/f]
+    m_ActionId: 24c966f8-f3ae-4cae-b1ea-71321c520d20
+    m_ActionName: UI/ConvertFish[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -598,6 +598,7 @@ MonoBehaviour:
   inventoryGrid:
     width: 4
     height: 4
+  levelManager: {fileID: 0}
   testItem:
   - {fileID: 11400000, guid: c58481edf5e91e5469ad9c18969ebdb9, type: 2}
   testItemCount: 0
@@ -881,6 +882,14 @@ PrefabInstance:
       propertyPath: m_TargetCamera
       value: 
       objectReference: {fileID: 58065559}
+    - target: {fileID: 682664029218033891, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913426918486499506, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1985461596529196370, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -981,6 +990,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5467926395745841002, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: slider
+      value: 
+      objectReference: {fileID: 6191034219424037892}
+    - target: {fileID: 5539844684036690101, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5986329189037329720, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1006,3 +1023,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+--- !u!114 &6191034219424037892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5039906542548137616, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
+  m_PrefabInstance: {fileID: 6191034219424037888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

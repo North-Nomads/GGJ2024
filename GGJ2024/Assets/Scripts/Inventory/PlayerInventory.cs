@@ -71,10 +71,8 @@ namespace GGJ.Inventory
 
         public void OnConvertFish(InputAction.CallbackContext context)
         {
-            if (!context.performed)
-                return;
-            if (TryRemoveAllItem())
-                print(1);
+            if (context.performed)
+                TryRemoveAllItem();
         }
         
         public bool TryAddItem<TItem>(TItem item) where TItem : ItemInfo
@@ -91,18 +89,18 @@ namespace GGJ.Inventory
             return false;
         }
 
-        public bool TryRemoveAllItem()
+        public void TryRemoveAllItem()
         {
+            float allXP = 0;
             foreach (InventorySlot slot in _slots)
             {
                 if (slot.ItemInfo is not null)
                 {
-                    LevelManager.XPGained(slot.ItemInfo.FishXp);
+                    allXP += slot.ItemInfo.FishXp;
                     RemoveItem(slot.ItemInfo, slot);
-                    return true;
                 }
             }
-            return false;
+            StartCoroutine(LevelManager.XPGained(allXP));
         }
 
         public bool TryRemoveItem<TItem>(TItem item) where TItem : ItemInfo
