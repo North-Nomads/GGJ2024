@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -7,6 +8,7 @@ using UnityEngine.UIElements;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private UnityEngine.UI.Slider slider;
+    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private double playerXP;
     [SerializeField] private double playerLevel;
     private double currentXPneeded;
@@ -14,6 +16,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         currentXPneeded = Math.Pow(2, playerLevel);
+        text.text = playerLevel.ToString();
     }
     public IEnumerator XPGained(float xp)
     {
@@ -26,6 +29,7 @@ public class LevelManager : MonoBehaviour
                 playerXP -= currentXPneeded;
                 playerLevel += 1;
                 currentXPneeded = Math.Pow(2, playerLevel);
+                text.text = playerLevel.ToString();
             }
             slider.value = (float)playerXP / (float)currentXPneeded;
             yield return new WaitForSeconds(0.01f);
