@@ -150,6 +150,15 @@
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ConvertFish",
+                    "type": "Button",
+                    "id": "24c966f8-f3ae-4cae-b1ea-71321c520d20",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -183,6 +192,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "UI (Close)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e31d900-1821-4288-9106-b33307363374",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConvertFish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

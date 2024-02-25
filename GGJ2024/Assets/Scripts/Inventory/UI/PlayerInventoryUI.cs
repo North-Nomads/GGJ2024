@@ -48,7 +48,8 @@ namespace GGJ.Inventory.UI
                 
                 InventorySlot slot = _playerInventory.Slots[cellIndex];
                 _uiSlots[cellIndex].Initialize(slot);
-                
+
+                slotUI.Deselect();
                 slotUI.SlotSelected += OnSelectSlot;
                 slotUI.SlotIsEmpty += OnEmptySlot;
             }
@@ -62,7 +63,8 @@ namespace GGJ.Inventory.UI
 
             if (IsActive)
             {
-                //screenBlur.ToggleBlurring();
+                DeselectAll();
+                screenBlur.ToggleBlurring();
                 SelectFirstNotEmpty();
             }
         }
@@ -75,17 +77,11 @@ namespace GGJ.Inventory.UI
             }
         }
 
-        private void OnDisable()
-        {
-            //screenBlur.ToggleBlurring();
-            DeselectAll();
-        }
-
         private void OnEmptySlot()
         {
             if (SelectedSlot == null || !SelectedSlot.IsEmpty) return;
             UpdateHintWindow(SelectedSlot);
-            SelectNextNotEmpty();
+            //SelectNextNotEmpty();
         }
         
         private void DeselectAll() => Array.ForEach(_uiSlots, e => e.Deselect());

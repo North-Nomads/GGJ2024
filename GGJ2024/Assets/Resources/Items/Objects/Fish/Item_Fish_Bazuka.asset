@@ -26,3 +26,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 26efd7ab86a79344687d0e90a9604c99, type: 3}
   itemType: 0
   rarityType: 2
+  fishXp: 100

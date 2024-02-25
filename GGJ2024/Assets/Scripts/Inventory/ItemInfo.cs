@@ -10,12 +10,14 @@ namespace GGJ.Inventory
         [SerializeField] private Sprite icon;
         [SerializeField] private ItemType itemType;
         [SerializeField] private RarityType rarityType;
+        [SerializeField] private int fishXp;
 
         public string Title => title;
         public string Description => description;
         public Sprite Icon => icon;
         public ItemType ItemType => itemType;
         public RarityType RarityType => rarityType;
+        public int FishXp => fishXp;
 
         public string GetItemTypeTranslated()
         {

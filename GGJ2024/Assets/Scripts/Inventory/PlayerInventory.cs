@@ -12,6 +12,7 @@ namespace GGJ.Inventory
     {
         [SerializeField] private PlayerInventoryUI view;
         [SerializeField] private InventoryGrid inventoryGrid;
+        [SerializeField] private LevelManager levelManager;
         
         [Header("Only for test")]
         [SerializeField] private List<ItemInfo> testItem;
@@ -20,6 +21,7 @@ namespace GGJ.Inventory
         private InventorySlot[] _slots;
 
         public InventoryGrid InventoryGrid => inventoryGrid;
+        public LevelManager LevelManager => levelManager;
         public int MaxCapacity => inventoryGrid.Width * inventoryGrid.Height;
         public IReadOnlyList<InventorySlot> Slots => _slots;
         public event EventHandler<ItemInfo> OnPlayerInventoryUpdated = delegate { };
@@ -66,6 +68,12 @@ namespace GGJ.Inventory
             view.HandleInventoryView();
             
         }
+
+        public void OnConvertFish(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                TryRemoveAllItem();
+        }
         
         public bool TryAddItem<TItem>(TItem item) where TItem : ItemInfo
         {
@@ -79,6 +87,20 @@ namespace GGJ.Inventory
             }
 
             return false;
+        }
+
+        public void TryRemoveAllItem()
+        {
+            float allXP = 0;
+            foreach (InventorySlot slot in _slots)
+            {
+                if (slot.ItemInfo is not null)
+                {
+                    allXP += slot.ItemInfo.FishXp;
+                    RemoveItem(slot.ItemInfo, slot);
+                }
+            }
+            StartCoroutine(LevelManager.XPGained(allXP));
         }
 
         public bool TryRemoveItem<TItem>(TItem item) where TItem : ItemInfo
