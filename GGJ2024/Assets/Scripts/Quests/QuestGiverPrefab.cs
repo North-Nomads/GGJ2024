@@ -1,6 +1,7 @@
 using System.Linq;
 using GGJ.Dialogs;
 using GGJ.Infrastructure;
+using Logic;
 using UnityEngine;
 
 namespace GGJ.Quests
