@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GGJ.Quests
+namespace Logic
 {
     [RequireComponent(typeof(Collider))]
     public class TriggerObserver : MonoBehaviour
