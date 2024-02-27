@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GGJ.Infrastructure.AssetManagement;
 using GGJ.Infrastructure.Factories;
 using GGJ.Infrastructure.Services;
 using GGJ.Infrastructure.Services.Services.PersistentProgress;
@@ -19,7 +20,7 @@ namespace GGJ.Infrastructure.States
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, services),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IPersistentProgressService>(), services.Single<IGameFactory>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IPersistentProgressService>(), services.Single<IGameFactory>(), services.Single<IAssetProvider>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

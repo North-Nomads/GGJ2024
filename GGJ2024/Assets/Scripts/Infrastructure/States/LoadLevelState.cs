@@ -1,11 +1,14 @@
 ﻿using System;
 using Cinemachine;
+using GGJ.Dialogs;
+using GGJ.Infrastructure.AssetManagement;
 using GGJ.Infrastructure.Factories;
 using GGJ.Infrastructure.Services.Services.PersistentProgress;
 using GGJ.Infrastructure.Services.Services.SaveLoad;
 using GGJ.Infrastructure.States.Interfaces;
 using GGJ.Movement;
 using GGJ.Quests;
+using NPC;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -19,13 +22,15 @@ namespace GGJ.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
+        private readonly IAssetProvider _assetProvider;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, IPersistentProgressService progressService, IGameFactory gameFactory, IAssetProvider assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _progressService = progressService;
             _gameFactory = gameFactory;
+            _assetProvider = assetProvider;
 
             Cursor.visible = false;
         }
@@ -50,38 +55,56 @@ namespace GGJ.Infrastructure.States
             _gameFactory.CleanUp();
             GameObject character = _gameFactory.CreateCharacter(GameObject.FindGameObjectWithTag(InitialCharacterPointTag).transform.position);
             GameObject camera = _gameFactory.CreateCamera();
-            // TODO: Make instantiate method generic to return given object type
-            // TODO: Get rid of getcomponent in set up camera values and make character variable of PlayerMovement type
-            SetUpCameraValues(character.GetComponent<PlayerMovement>(), camera.transform); 
-
-            
             QuestView questView = _gameFactory.CreateQuestCanvas().GetComponentInChildren<QuestView>();
-            //_gameFactory.CreateInventoryCanvas();
 
+            InitCamera(character, camera.transform); 
+            //InitHud(character, questView);
+            InitNpc();
             InitQuestGivers(character);
-            InitHud(character, questView);
         }
 
-        private void SetUpCameraValues(PlayerMovement player, Transform camera)
+        private void InitCamera(GameObject character, Transform camera)
         {
-            player.PlayerCamera = camera;
-            var cinemachineCamera = camera.GetComponent<CinemachineFreeLook>();
-            cinemachineCamera.Follow = player.transform;
-            cinemachineCamera.LookAt = player.CameraTargetPoint;
+            if (character.TryGetComponent(out PlayerMovement movement))
+            {
+                movement.PlayerCamera = camera;
+                CinemachineFreeLook cinemachineCamera = camera.GetComponent<CinemachineFreeLook>();
+
+                cinemachineCamera.Follow = movement.transform;
+                cinemachineCamera.LookAt = movement.CameraTargetPoint;
+            }
+            else
+                throw new NullReferenceException($"PlayerMovement not found on {character.name} {character.GetType()}");
+        }
+
+        private void InitNpc()
+        {
+            NpcObserver observer = Object.FindObjectOfType<NpcObserver>();
+
+            if (observer != null) 
+                observer.Initialize(_assetProvider);
         }
 
         private void InitHud(GameObject character, QuestView questView)
         {
-            if (character.TryGetComponent(out QuestManager questManager)) 
+            if (character.TryGetComponent(out QuestManager questManager))
                 questManager.Construct(questView);
+            else
+                throw new NullReferenceException($"Quest Manager not found on {character.name} {character.GetType()}");
         }
 
         private void InitQuestGivers(GameObject character)
         {
-            QuestGiverPrefab[] questGivers =
-                Object.FindObjectsByType<QuestGiverPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            
-            Array.ForEach(questGivers, e => e.Construct(character));
+            if (character.TryGetComponent(out DialogInputHandler dialogInputHandler))
+            {
+                QuestGiverPrefab[] questGivers =
+                    Object.FindObjectsByType<QuestGiverPrefab>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+                Array.ForEach(questGivers, e => e.Construct(character));
+            }
+            else
+                throw new NullReferenceException(
+                    $"Dialog Input Handler not found on {character.name} {character.GetType()}");
         }
 
         private void InformProgressReaders()
