@@ -47,6 +47,7 @@ namespace NPC.Components
                 _randomWalkSpeakRoutine = coroutineRunner.StartCoroutine(SpeakRandomWalkSpeech());
             
             _knockOutSpeechTimer += Time.deltaTime;
+            _speechAppearTimer += Time.deltaTime;
         }
 
         private IEnumerator SpeakRandomWalkSpeech()
@@ -57,7 +58,8 @@ namespace NPC.Components
 
                 while (_speechAppearTimer < speechAppearTime)
                     yield return null;
-                
+
+                _speechAppearTimer = 0f;
                 SpeakRandomSpeech(_randomWalkSpeeches);
             }
         }
