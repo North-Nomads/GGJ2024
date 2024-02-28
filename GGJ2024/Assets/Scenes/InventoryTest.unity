@@ -1087,7 +1087,7 @@ PrefabInstance:
       objectReference: {fileID: 6191034219424037892}
     - target: {fileID: 5467926395745841002, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: playerLevel
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5539844684036690101, guid: 1131c07ee3efab745a8fab9b7e99a130, type: 3}
       propertyPath: m_AnchorMax.y
