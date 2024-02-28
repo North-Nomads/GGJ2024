@@ -12,9 +12,12 @@ namespace NPC.Settings
         [Header("Speeches")]
         [Tooltip("Appears when player collides with NPC")]
         [SerializeField] private string[] knockOutSpeeches;
+        [SerializeField] private float knockOutSpeechCooldown;
         
         [Tooltip("Appears randomly when NPC walks around")]
         [SerializeField] private string[] randomWalkSpeeches;
+        [SerializeField] private float minWalkSpeechAppearTime;
+        [SerializeField] private float maxWalkSpeechAppearTime;
         
         [SerializeField] private bool canRun;
         [SerializeField] private bool isShouldStay;
@@ -23,7 +26,10 @@ namespace NPC.Settings
         public float MaxRunSpeed => maxRunSpeed;
 
         public string[] KnockOutSpeeches => knockOutSpeeches;
+        public float KnockOutSpeechCooldown => knockOutSpeechCooldown;
         public string[] RandomWalkSpeeches => randomWalkSpeeches;
+        public float MinWalkSpeechAppearTime => minWalkSpeechAppearTime;
+        public float MaxWalkSpeechAppearTime => maxWalkSpeechAppearTime;
 
         public bool CanRun => canRun;
         public bool IsShouldStay => isShouldStay;
