@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GGJ.Infrastructure;
 using UnityEngine;
 
 namespace NPC.StateMachine.States
@@ -7,10 +8,12 @@ namespace NPC.StateMachine.States
     {
         protected readonly List<Transition> Transitions = new();
         protected readonly NpcStateMachine StateMachine;
+        protected readonly ICoroutineStopper CoroutineStopper;
 
-        protected BaseState(NpcStateMachine stateMachine)
+        protected BaseState(NpcStateMachine stateMachine, ICoroutineStopper coroutineStopper)
         {
             StateMachine = stateMachine;
+            CoroutineStopper = coroutineStopper;
         }
 
         public virtual void Enter() => Debug.Log($"{this.GetType()} entered");

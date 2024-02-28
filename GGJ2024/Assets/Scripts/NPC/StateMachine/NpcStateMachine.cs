@@ -12,17 +12,14 @@ namespace NPC.StateMachine
         
         private IState _currentState;
 
-        public IReadOnlyDictionary<Type, IState> States => _states;
-        public WalkableNpc WalkableNpc => _walkableNpc;
-
         public NpcStateMachine(WalkableNpc walkableNpc)
         {
             _walkableNpc = walkableNpc;
 
             _states = new Dictionary<Type, IState>()
             {
-                [typeof(IdleState)] = new IdleState(this),
-                [typeof(WalkState)] = new WalkState(this),
+                [typeof(IdleState)] = new IdleState(this, _walkableNpc),
+                [typeof(WalkState)] = new WalkState(this, _walkableNpc, _walkableNpc.RouteProvider, _walkableNpc.Rigidbody, _walkableNpc.Settings),
             };
             
             foreach (IState state in _states.Values) 

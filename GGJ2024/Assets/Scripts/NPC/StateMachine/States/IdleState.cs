@@ -1,15 +1,17 @@
-﻿namespace NPC.StateMachine.States
+﻿using GGJ.Infrastructure;
+
+namespace NPC.StateMachine.States
 {
     public sealed class IdleState : BaseState
     {
-        public IdleState(NpcStateMachine stateMachine) : base(stateMachine) { }
+        public IdleState(NpcStateMachine stateMachine, ICoroutineStopper coroutineStopper) : base(stateMachine, coroutineStopper) { }
         
         public override void InitializeTransitions()
         {
-            Transitions.AddRange(new[]
+            /*Transitions.AddRange(new[]
             {
                 new Transition(StateMachine.GetState<WalkState>(), () => true),
-            });
+            });*/
         }
     }
 }
