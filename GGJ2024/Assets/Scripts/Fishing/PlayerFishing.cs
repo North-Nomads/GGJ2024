@@ -16,7 +16,7 @@ namespace GGJ.Fishing
         [SerializeField] private FishingEventProvider provider;
         [SerializeField] private float fishPullTime;
         [SerializeField] private Transform rodEnd;
-        [SerializeField] private SimpleFishingMinigame minigame;
+        [SerializeField] private FishingMinigame minigame;
         
         private LineRenderer _fishingLineRenderer;
         private Animator _animationController;
@@ -60,6 +60,7 @@ namespace GGJ.Fishing
                     // Do something, maybe in coroutine.
                     StartCoroutine(PullFish(caught));
                 }
+                Destroy(game.gameObject);
             };
             _fishingLineRenderer.enabled = false;
             _suppressFishing = false;

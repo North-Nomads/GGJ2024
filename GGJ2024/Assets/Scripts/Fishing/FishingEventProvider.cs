@@ -8,13 +8,7 @@ namespace GGJ.Fishing
 {
 	public class FishingEventProvider : MonoBehaviour
 	{
-		[SerializeField] private List<RandomSelectionInfo<MinigameBase>> availableMinigames;
 		[SerializeField] private List<RandomSelectionInfo<CatchableItemBase>> availableCatchableItems;
-
-		public MinigameBase GetRandomGame()
-		{
-			return SelectRandomItem(availableMinigames);
-		}
 
 		public CatchableItemBase GetRandomCatchable()
 		{
