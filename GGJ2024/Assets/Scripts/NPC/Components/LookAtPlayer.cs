@@ -8,11 +8,29 @@ namespace NPC.Components
     {
         private const string PlayerTag = "Player";
         
+        [Header("Head settings")]
         [SerializeField] private Transform modelHead;
+        [SerializeField, Min(0f)] private float maxRotationAngle;
+        
+        [Header("Vision settings")]
         [SerializeField] private TriggerObserver visionTrigger;
+        [SerializeField, Min(0f)] private float minVisionPoint;
 
         private Transform _playerTransform;
-        
+
+        public bool TryLookAtPlayer(float duration)
+        {
+            if (_playerTransform != null)
+            {
+                StartCoroutine(LookAtPlayerRoutine(duration));
+                return true;
+            }
+
+            return false;
+        }
+
+        private void Update() => LookAtPlayerWhenMinVisionPoint();
+
         private void OnEnable()
         {
             visionTrigger.TriggerEntered += OnPlayerBecameVisible;
@@ -24,7 +42,7 @@ namespace NPC.Components
             visionTrigger.TriggerEntered -= OnPlayerBecameVisible;
             visionTrigger.TriggerExited -= OnPlayerBecameInvisible;
         }
-        
+
         private void OnPlayerBecameVisible(Collider other)
         {
             if (other.transform.CompareTag(PlayerTag))
@@ -37,15 +55,13 @@ namespace NPC.Components
                 _playerTransform = null;
         }
 
-        public bool TryLookAtPlayer(float duration)
+        private void LookAtPlayerWhenMinVisionPoint()
         {
-            if (_playerTransform != null)
+            if (_playerTransform != null &&
+                Vector3.Distance(transform.position, _playerTransform.position) < minVisionPoint)
             {
-                StartCoroutine(LookAtPlayerRoutine(duration));
-                return true;
+                modelHead.LookAt(_playerTransform);
             }
-
-            return false;
         }
 
         private IEnumerator LookAtPlayerRoutine(float duration)
@@ -59,5 +75,19 @@ namespace NPC.Components
                 yield return null;
             }
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            DrawVisionSphere();
+            DrawClosestVisionPointSphere();
+        }
+
+        private void DrawVisionSphere() => 
+            Gizmos.DrawWireSphere(transform.position, visionTrigger.Collider.bounds.size.x / 2);
+
+        private void DrawClosestVisionPointSphere() => 
+            Gizmos.DrawWireSphere(transform.position, minVisionPoint);
+#endif
     }
 }
