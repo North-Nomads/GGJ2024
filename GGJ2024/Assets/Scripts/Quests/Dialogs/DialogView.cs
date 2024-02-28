@@ -22,11 +22,5 @@ namespace GGJ.Dialogs
             get => textField.text;
             set => textField.text = value;
         }
-
-        public void Initialize(QuestDialog questDialog)
-        {
-            questDialog.DialogStarted += () => { gameObject.SetActive(true); };
-            questDialog.DialogEnded += () => { gameObject.SetActive(false); };
-        }
     }
 }

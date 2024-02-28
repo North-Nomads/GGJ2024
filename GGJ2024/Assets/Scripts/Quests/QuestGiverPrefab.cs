@@ -22,7 +22,7 @@ namespace GGJ.Quests
 
         private QuestManager _questManager;
         private QuestInfo _currentQuest;
-        private IDialog _questDialog;
+        private QuestDialog _questDialog;
 
         private bool _isPlayerInTalkRadius;
 
