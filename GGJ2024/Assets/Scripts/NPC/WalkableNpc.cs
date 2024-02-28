@@ -1,38 +1,57 @@
-﻿using System.Collections;
+﻿using System;
 using GGJ.Dialogs;
 using GGJ.Infrastructure;
-using Logic;
 using NPC.Components;
+using NPC.Settings;
 using NPC.StateMachine;
 using UnityEngine;
 
 namespace NPC
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class WalkableNpc : MonoBehaviour, ICoroutineRunner
+    public class WalkableNpc : MonoBehaviour, ICoroutineStopper
     {
+        private const string PlayerTag = "Player";
+
         [SerializeField] private DialogView dialogView;
         [SerializeField] private AnimatorAgent animatorAgent;
         [SerializeField] private LookAtPlayer lookAtPlayer;
         [SerializeField] private Rigidbody rigidbody;
+        [SerializeField] private NpcSettings settings;
         
         private NpcStateMachine _stateMachine;
         private RouteProvider _routeProvider;
-
-        public DialogView DialogView => dialogView;
+        private DialogSpeaker _dialogSpeaker;
+        
         public AnimatorAgent AnimatorAgent => animatorAgent;
         public LookAtPlayer LookAtPlayer => lookAtPlayer;
         public Rigidbody Rigidbody => rigidbody;
+        public NpcSettings Settings => settings;
         public RouteProvider RouteProvider => _routeProvider;
+
+        public event Action PlayerCollided;
 
         private void Awake()
         {
             _routeProvider = new RouteProvider(this);
             _stateMachine = new NpcStateMachine(this);
+            
+            _dialogSpeaker = new DialogSpeaker();
+            _dialogSpeaker.Initialize(settings, dialogView, this);
         }
 
-        private void Update() => _stateMachine.Tick();
+        private void Update()
+        {
+            _stateMachine.Tick();
+            _dialogSpeaker.Tick();
+        }
 
         private void FixedUpdate() => _stateMachine.FixedTick();
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag(PlayerTag))
+                PlayerCollided?.Invoke();
+        }
     }
 }
