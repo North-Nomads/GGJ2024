@@ -31,7 +31,7 @@ namespace NPC.Components
             _currentRoutePoint = _route.RootPoint;
             _currentRoutePoint.TriggerObserver.TriggerEntered += OnPointTriggerEntered;
             
-            _routeWalkingRoutine = _coroutineRunner.StartCoroutine(StartRouteWalking());
+            //_routeWalkingRoutine = _coroutineRunner.StartCoroutine(StartRouteWalking());
         }
         
         public IEnumerator StartRouteWalking()
