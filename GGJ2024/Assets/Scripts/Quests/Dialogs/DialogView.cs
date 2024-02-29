@@ -22,5 +22,13 @@ namespace GGJ.Dialogs
             get => textField.text;
             set => textField.text = value;
         }
+
+        private void OnDisable() => CleanUp();
+
+        private void CleanUp()
+        {
+            titleField.text = String.Empty;
+            textField.text = String.Empty;
+        }
     }
 }

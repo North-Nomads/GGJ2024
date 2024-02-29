@@ -11,7 +11,7 @@ namespace GGJ.Dialogs
         public event Action DialogStarted;
         public event Action DialogEnded;
         
-        private new void Initialize(DialogView dialogView) => throw new NotSupportedException();
+        public new void Initialize(DialogView dialogView) => throw new NotSupportedException();
 
         public void Initialize(GameObject character, DialogView dialogView)
         {
@@ -35,8 +35,6 @@ namespace GGJ.Dialogs
                 while (DialogRoutine != null)
                     yield return null;
             }
-            DialogView.Text = String.Empty;
-            DialogView.Title = String.Empty;
             DialogView.gameObject.SetActive(false);
             
             DialogEnded?.Invoke();
