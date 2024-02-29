@@ -4,7 +4,7 @@ namespace NPC.StateMachine.States
 {
     public sealed class IdleState : BaseState
     {
-        public IdleState(NpcStateMachine stateMachine, ICoroutineStopper coroutineStopper) : base(stateMachine, coroutineStopper) { }
+        public IdleState(NpcStateMachine stateMachine, ICoroutineRunner coroutineRunner) : base(stateMachine, coroutineRunner) { }
         
         public override void InitializeTransitions()
         {

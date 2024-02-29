@@ -14,7 +14,7 @@ namespace NPC.StateMachine.States
 
         private Coroutine _walkRoutine;
 
-        public WalkState(NpcStateMachine stateMachine, ICoroutineStopper coroutineStopper, RouteProvider routeProvider, Rigidbody rigidbody, NpcSettings settings) : base(stateMachine, coroutineStopper)
+        public WalkState(NpcStateMachine stateMachine, ICoroutineRunner coroutineRunner, RouteProvider routeProvider, Rigidbody rigidbody, NpcSettings settings) : base(stateMachine, coroutineRunner)
         {
             _routeProvider = routeProvider;
             _rigidbody = rigidbody;
@@ -34,7 +34,7 @@ namespace NPC.StateMachine.States
         public override void Tick()
         {
             if (_routeProvider.Route != null && _walkRoutine == null) 
-                _walkRoutine = CoroutineStopper.StartCoroutine(StartRouteWalk());
+                _walkRoutine = CoroutineRunner.StartCoroutine(StartRouteWalk());
         }
 
         public override void Exit() => StopRouteWalk();
@@ -57,7 +57,7 @@ namespace NPC.StateMachine.States
         {
             if (_walkRoutine != null)
             {
-                CoroutineStopper.StopCoroutine(_walkRoutine);
+                CoroutineRunner.StopCoroutine(_walkRoutine);
                 _walkRoutine = null;
             }
         }

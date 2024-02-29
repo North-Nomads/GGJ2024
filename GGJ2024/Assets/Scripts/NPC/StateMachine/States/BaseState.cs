@@ -8,12 +8,12 @@ namespace NPC.StateMachine.States
     {
         protected readonly List<Transition> Transitions = new();
         protected readonly NpcStateMachine StateMachine;
-        protected readonly ICoroutineStopper CoroutineStopper;
+        protected readonly ICoroutineRunner CoroutineRunner;
 
-        protected BaseState(NpcStateMachine stateMachine, ICoroutineStopper coroutineStopper)
+        protected BaseState(NpcStateMachine stateMachine, ICoroutineRunner coroutineRunner)
         {
             StateMachine = stateMachine;
-            CoroutineStopper = coroutineStopper;
+            CoroutineRunner = coroutineRunner;
         }
 
         public virtual void Enter() => Debug.Log($"{this.GetType()} entered");

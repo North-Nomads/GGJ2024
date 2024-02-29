@@ -5,17 +5,18 @@ using NPC.Components;
 using NPC.Settings;
 using NPC.StateMachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NPC
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class WalkableNpc : MonoBehaviour, ICoroutineStopper
+    public class WalkableNpc : MonoBehaviour, ICoroutineRunner
     {
         private const string PlayerTag = "Player";
 
         [SerializeField] private DialogView dialogView;
         [SerializeField] private AnimatorAgent animatorAgent;
-        [SerializeField] private LookAtPlayer lookAtPlayer;
+        [SerializeField] private Vision vision;
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private NpcSettings settings;
         
@@ -24,7 +25,7 @@ namespace NPC
         private DialogSpeaker _dialogSpeaker;
         
         public AnimatorAgent AnimatorAgent => animatorAgent;
-        public LookAtPlayer LookAtPlayer => lookAtPlayer;
+        public Vision Vision => vision;
         public Rigidbody Rigidbody => rigidbody;
         public NpcSettings Settings => settings;
         public RouteProvider RouteProvider => _routeProvider;
@@ -33,11 +34,11 @@ namespace NPC
 
         private void Awake()
         {
-            _routeProvider = new RouteProvider(this);
+            _routeProvider = new RouteProvider();
             _stateMachine = new NpcStateMachine(this);
             
             _dialogSpeaker = new DialogSpeaker();
-            _dialogSpeaker.Initialize(settings, dialogView, this);
+            _dialogSpeaker.Initialize(settings, dialogView, vision, this);
         }
 
         private void Update()
