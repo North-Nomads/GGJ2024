@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NPC.Components
 {
-    public class LookAtPlayer : MonoBehaviour
+    public class Vision : MonoBehaviour
     {
         private const string PlayerTag = "Player";
         
@@ -17,6 +17,9 @@ namespace NPC.Components
         [SerializeField, Min(0f)] private float minVisionPoint;
 
         private Transform _playerTransform;
+        private Quaternion _initialRotation;
+
+        public bool PlayerInVisionRadius => _playerTransform != null;
 
         public bool TryLookAtPlayer(float duration)
         {
@@ -27,6 +30,11 @@ namespace NPC.Components
             }
 
             return false;
+        }
+        
+        private void Awake()
+        {
+            _initialRotation = modelHead.rotation;
         }
 
         private void Update() => LookAtPlayerWhenMinVisionPoint();
@@ -55,32 +63,48 @@ namespace NPC.Components
                 _playerTransform = null;
         }
 
+        private bool ObjectInMinVisionRadius(Vector3 position) => 
+            Vector3.Distance(transform.position, position) < minVisionPoint;
+
         private void LookAtPlayerWhenMinVisionPoint()
         {
-            if (_playerTransform != null &&
-                Vector3.Distance(transform.position, _playerTransform.position) < minVisionPoint)
-            {
-                modelHead.LookAt(_playerTransform);
-            }
+            if (PlayerInVisionRadius && ObjectInMinVisionRadius(_playerTransform.position))
+                RotateHeadTowards(_playerTransform.position);
+            else
+                RotateHeadTowards(transform.TransformDirection(transform.forward));
         }
 
         private IEnumerator LookAtPlayerRoutine(float duration)
         {
             float lookAtPlayerTimer = 0f;
             
-            while (_playerTransform != null && lookAtPlayerTimer < duration)
+            while (PlayerInVisionRadius && lookAtPlayerTimer < duration)
             {
-                modelHead.LookAt(_playerTransform);
+                RotateHeadTowards(_playerTransform.position);
                 lookAtPlayerTimer += Time.deltaTime;
                 yield return null;
             }
         }
 
+        private void RotateHeadTowards(Vector3 targetPosition)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - modelHead.position);
+            targetRotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
+            
+            float angleDifference = Quaternion.Angle(_initialRotation, targetRotation);
+            float allowedRotationAngle = Mathf.Min(maxRotationAngle, angleDifference);
+
+            modelHead.rotation = Quaternion.Lerp(modelHead.rotation, Quaternion.RotateTowards(_initialRotation, targetRotation, allowedRotationAngle), Time.deltaTime * 3f);
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            DrawVisionSphere();
-            DrawClosestVisionPointSphere();
+            if (Application.isPlaying)
+            {
+                DrawVisionSphere();
+                DrawClosestVisionPointSphere();
+            }
         }
 
         private void DrawVisionSphere() => 
