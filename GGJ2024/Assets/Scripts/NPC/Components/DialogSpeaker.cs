@@ -10,9 +10,12 @@ namespace NPC.Components
 {
     public class DialogSpeaker
     {
+        private const float DialogLookingDuration = 2f;
+        
         private ICoroutineRunner coroutineRunner; 
         
         private Dialog _dialog;
+        private Vision _vision;
         
         private string[] _randomWalkSpeeches;
         private string[] _knockOutSpeeches;
@@ -26,10 +29,12 @@ namespace NPC.Components
 
         private Coroutine _randomWalkSpeakRoutine;
 
-        public void Initialize(NpcSettings settings, DialogView dialogView, WalkableNpc npc)
+        public void Initialize(NpcSettings settings, DialogView dialogView, Vision vision, WalkableNpc npc)
         {
             _dialog = new Dialog();
             _dialog.Initialize(dialogView);
+
+            _vision = vision;
 
             _randomWalkSpeeches = settings.RandomWalkSpeeches;
             _knockOutSpeeches = settings.KnockOutSpeeches;
@@ -43,9 +48,27 @@ namespace NPC.Components
 
         public void Tick()
         {
-            if (_randomWalkSpeakRoutine == null)
+            ToggleSpeakRoutine();
+            UpdateTimers();
+        }
+
+        private void ToggleSpeakRoutine()
+        {
+            if (_randomWalkSpeakRoutine == null && _vision.PlayerInVisionRadius)
+            {
                 _randomWalkSpeakRoutine = coroutineRunner.StartCoroutine(SpeakRandomWalkSpeech());
-            
+            }
+            else if (_randomWalkSpeakRoutine != null && !_vision.PlayerInVisionRadius)
+            {
+                coroutineRunner.StopCoroutine(_randomWalkSpeakRoutine);
+                _randomWalkSpeakRoutine = null;
+                
+                _speechAppearTimer = 0f;
+            }
+        }
+
+        private void UpdateTimers()
+        {
             _knockOutSpeechTimer += Time.deltaTime;
             _speechAppearTimer += Time.deltaTime;
         }
@@ -64,14 +87,6 @@ namespace NPC.Components
             }
         }
 
-        private string GetRandomSpeech(string[] speeches)
-        {
-            if (speeches.Length == 0)
-                return null;
-
-            return speeches[Random.Range(0, speeches.Length)];
-        }
-
         private void OnPlayerCollided()
         {
             if (_knockOutSpeechTimer < _knockOutSpeechCooldown) return;
@@ -81,8 +96,18 @@ namespace NPC.Components
             SpeakRandomSpeech(_knockOutSpeeches);
         }
 
-        private void SpeakRandomSpeech(string[] speeches) =>
-            coroutineRunner.StartCoroutine(
-                _dialog.ShowPhrase(coroutineRunner, String.Empty, GetRandomSpeech(speeches)));
+        private string GetRandomSpeech(string[] speeches)
+        {
+            if (speeches.Length == 0)
+                return null;
+
+            return speeches[Random.Range(0, speeches.Length)];
+        }
+
+        private void SpeakRandomSpeech(string[] speeches)
+        {
+            _vision.TryLookAtPlayer(DialogLookingDuration);
+            _dialog.ShowPhrase(coroutineRunner, String.Empty, GetRandomSpeech(speeches));
+        }
     }
 }
