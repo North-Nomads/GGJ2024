@@ -8,8 +8,10 @@ namespace GGJ.Dialogs
     public class Dialog
     {
         private const float DialogWriteRate = 0.07f;
+        private const float PhraseDisappearTime = 4f;
         
         protected Coroutine DialogRoutine;
+        protected Coroutine WriteDialogRoutine;
         protected DialogView DialogView;
         
         protected string CurrentDialogVariant;
@@ -19,17 +21,30 @@ namespace GGJ.Dialogs
         
         public void Initialize(DialogView dialogView) => DialogView = dialogView;
 
-        public IEnumerator ShowPhrase(ICoroutineRunner coroutineRunner, string title, string phrase)
+        public void ShowPhrase(ICoroutineRunner coroutineRunner, string title, string phrase)
+        {
+            if (DialogRoutine != null)
+            {
+                coroutineRunner.StopCoroutine(WriteDialogRoutine);
+                coroutineRunner.StopCoroutine(DialogRoutine);
+                WriteDialogRoutine = null;
+                DialogRoutine = null;
+            }
+            
+            DialogRoutine = coroutineRunner.StartCoroutine(ShowPhraseRoutine(coroutineRunner, title, phrase));
+        }
+
+        public IEnumerator ShowPhraseRoutine(ICoroutineRunner coroutineRunner, string title, string phrase)
         {
             PhraseStarted?.Invoke();
             
             DialogView.gameObject.SetActive(true);
             DialogView.Title = title;
             
-            DialogRoutine = coroutineRunner.StartCoroutine(WriteDialog(phrase));
-
-            while (DialogRoutine != null)
-                yield return null;
+            WriteDialogRoutine = coroutineRunner.StartCoroutine(WriteDialog(phrase));
+            
+            float overallPhraseDisappearTime = PhraseDisappearTime + phrase.Length * DialogWriteRate;
+            yield return new WaitForSeconds(overallPhraseDisappearTime);
             
             DialogView.gameObject.SetActive(false);
             

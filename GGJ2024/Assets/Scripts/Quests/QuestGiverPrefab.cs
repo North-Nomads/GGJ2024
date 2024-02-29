@@ -90,7 +90,7 @@ namespace GGJ.Quests
         }
 
         private void ShowBusyPhrase() =>
-            StartCoroutine(_questDialog.ShowPhrase(this,
+            StartCoroutine(_questDialog.ShowPhraseRoutine(this,
                 questGiverInfo.name, questGiverInfo.BusyPhrase));
 
         private void ShowQuestDialog() => 
@@ -98,7 +98,7 @@ namespace GGJ.Quests
                 questGiverInfo.name, _currentQuest.MonologSpeeches));
 
         private void ShowCompletedPhrase() =>
-            StartCoroutine(_questDialog.ShowPhrase(this,
+            StartCoroutine(_questDialog.ShowPhraseRoutine(this,
                 questGiverInfo.name, _questManager.CurrentQuest.QuestGiverFinishText));
 
         private void StartQuest()
