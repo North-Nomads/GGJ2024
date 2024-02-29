@@ -8,8 +8,6 @@ namespace NPC.Components
 {
     public class RouteProvider
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        
         private Route _route;
         private RoutePoint _currentRoutePoint;
         private Coroutine _routeWalkingRoutine;
@@ -19,31 +17,12 @@ namespace NPC.Components
 
         public event EventHandler<WalkableNpc> DestinationPointReached;
 
-        public RouteProvider(ICoroutineRunner coroutineRunner)
-        {
-            _coroutineRunner = coroutineRunner;
-        }
-
         public void ChangeRoute(Route nextRoute)
         {
             _route = nextRoute;
             
             _currentRoutePoint = _route.RootPoint;
             _currentRoutePoint.TriggerObserver.TriggerEntered += OnPointTriggerEntered;
-            
-            //_routeWalkingRoutine = _coroutineRunner.StartCoroutine(StartRouteWalking());
-        }
-        
-        public IEnumerator StartRouteWalking()
-        {
-            while (_currentRoutePoint != _route.DestinationPoint)
-            {
-                yield return new WaitForFixedUpdate();
-            }
-            
-            //DestinationPointReached?.Invoke(this, this);
-
-            _routeWalkingRoutine = null;
         }
 
         private void OnPointTriggerEntered(Collider other)
