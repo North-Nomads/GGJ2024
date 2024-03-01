@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace NPC.Components
 {
@@ -10,7 +11,7 @@ namespace NPC.Components
         private static readonly int SpeakHash = Animator.StringToHash("IsSpeaking");
         
         [SerializeField] private Animator animator;
-        [SerializeField] private Rigidbody npcRigidbody;
+        [SerializeField] private NavMeshAgent navMeshAgent;
 
         public void PlayKnockOut() => animator.SetTrigger(KnockOutHash);
 
@@ -19,6 +20,6 @@ namespace NPC.Components
         public void PlaySpeak() => animator.SetTrigger(SpeakHash);
 
         private void Update() => 
-            animator.SetFloat(WalkHash, npcRigidbody.velocity.magnitude, 0.1f, Time.fixedTime);
+            animator.SetBool(WalkHash, navMeshAgent.velocity.magnitude / navMeshAgent.speed > 0);
     }
 }
