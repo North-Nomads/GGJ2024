@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using GGJ.Infrastructure;
 using NPC.Routes;
 using UnityEngine;
 
@@ -14,8 +12,15 @@ namespace NPC.Components
 
         public Route Route => _route;
         public RoutePoint CurrentRoutePoint => _currentRoutePoint;
+        public WalkableNpc WalkableNpc { get; private set; }
 
-        public event EventHandler<WalkableNpc> DestinationPointReached;
+        public event EventHandler DestinationPointReached;
+        public event Action CurrentPointChanged;
+
+        public RouteProvider(WalkableNpc walkableNpc)
+        {
+            WalkableNpc = walkableNpc;
+        }
 
         public void ChangeRoute(Route nextRoute)
         {
@@ -23,6 +28,7 @@ namespace NPC.Components
             
             _currentRoutePoint = _route.RootPoint;
             _currentRoutePoint.TriggerObserver.TriggerEntered += OnPointTriggerEntered;
+            CurrentPointChanged?.Invoke();
         }
 
         private void OnPointTriggerEntered(Collider other)
@@ -33,7 +39,10 @@ namespace NPC.Components
             {
                 _currentRoutePoint = _currentRoutePoint.NextPoint;
                 _currentRoutePoint.TriggerObserver.TriggerEntered += OnPointTriggerEntered;
+                CurrentPointChanged?.Invoke();
             }
+            else
+                DestinationPointReached?.Invoke(this, null);
         }
     }
 }

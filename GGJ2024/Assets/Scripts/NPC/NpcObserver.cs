@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GGJ.Infrastructure.AssetManagement;
+using NPC.Components;
 using NPC.Routes;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -42,20 +44,20 @@ namespace NPC
             }
         }
 
-        private void OnDestinationPointReached(object sender, WalkableNpc npc) => 
-            DespawnNpc(npc);
+        private void OnDestinationPointReached(object sender, EventArgs args) => 
+            DespawnNpc((sender as RouteProvider)?.WalkableNpc);
 
         /*private void OnRootPointCameraVisibleChanged(object sender, bool isVisible)
         {
             // TODO: Think about that
             Route route = sender as Route;
-            
-            if (_activeNpc.Exists(npc => npc.Route == route)) 
+
+            if (_activeNpc.Exists(npc => npc.Route == route))
                 return;
 
             bool isRouteAvailable = _availableRoutes.Contains(route);
-            
-            if (isRouteAvailable && isVisible) 
+
+            if (isRouteAvailable && isVisible)
                 _availableRoutes.Remove(route);
             else if (!isRouteAvailable && !isVisible)
                 _availableRoutes.Add(route);
@@ -70,11 +72,11 @@ namespace NPC
 
         private void SpawnNpc(WalkableNpc npc, Route route)
         {
-            npc.gameObject.SetActive(true);
-                
             npc.RouteProvider.DestinationPointReached += OnDestinationPointReached;
                 
             npc.transform.position = route.RootPoint.transform.position;
+            npc.gameObject.SetActive(true);
+            
             npc.RouteProvider.ChangeRoute(route);
             
             _activeNpc.Add(npc);
@@ -83,6 +85,8 @@ namespace NPC
 
         private void DespawnNpc(WalkableNpc npc)
         {
+            if (npc == null) return;
+            
             npc.RouteProvider.DestinationPointReached -= OnDestinationPointReached;
             
             _activeNpc.Remove(npc);

@@ -7,25 +7,22 @@ namespace NPC.StateMachine
 {
     public class NpcStateMachine
     {
-        private readonly WalkableNpc _walkableNpc;
         private readonly Dictionary<Type, IState> _states;
         
         private IState _currentState;
 
         public NpcStateMachine(WalkableNpc walkableNpc)
         {
-            _walkableNpc = walkableNpc;
-
             _states = new Dictionary<Type, IState>()
             {
-                [typeof(IdleState)] = new IdleState(this, _walkableNpc),
-                [typeof(WalkState)] = new WalkState(this, _walkableNpc, _walkableNpc.RouteProvider, _walkableNpc.Rigidbody, _walkableNpc.Settings),
+                [typeof(IdleState)] = new IdleState(this, walkableNpc, walkableNpc.Settings, walkableNpc.RouteProvider),
+                [typeof(WalkState)] = new WalkState(this, walkableNpc, walkableNpc.RouteProvider, walkableNpc.Rigidbody, walkableNpc.NavMeshAgent, walkableNpc.Settings),
             };
             
             foreach (IState state in _states.Values) 
                 state.InitializeTransitions();
 
-            EnterIn<WalkState>();
+            EnterIn<IdleState>();
         }
 
         public void Tick() => _currentState.Tick();
