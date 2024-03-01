@@ -5,7 +5,7 @@ using NPC.Components;
 using NPC.Settings;
 using NPC.StateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.AI;
 
 namespace NPC
 {
@@ -18,6 +18,7 @@ namespace NPC
         [SerializeField] private AnimatorAgent animatorAgent;
         [SerializeField] private Vision vision;
         [SerializeField] private Rigidbody rigidbody;
+        [SerializeField] private NavMeshAgent navMeshAgent;
         [SerializeField] private NpcSettings settings;
         
         private NpcStateMachine _stateMachine;
@@ -25,6 +26,7 @@ namespace NPC
         private DialogSpeaker _dialogSpeaker;
         
         public AnimatorAgent AnimatorAgent => animatorAgent;
+        public NavMeshAgent NavMeshAgent => navMeshAgent;
         public Vision Vision => vision;
         public Rigidbody Rigidbody => rigidbody;
         public NpcSettings Settings => settings;
@@ -34,12 +36,14 @@ namespace NPC
 
         private void Awake()
         {
-            _routeProvider = new RouteProvider();
+            _routeProvider = new RouteProvider(this);
             _stateMachine = new NpcStateMachine(this);
             
             _dialogSpeaker = new DialogSpeaker();
             _dialogSpeaker.Initialize(settings, dialogView, vision, this);
         }
+
+        private void OnDisable() => dialogView.gameObject.SetActive(false);
 
         private void Update()
         {
