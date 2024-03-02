@@ -24,6 +24,8 @@ namespace NPC
         private NpcStateMachine _stateMachine;
         private RouteProvider _routeProvider;
         private DialogSpeaker _dialogSpeaker;
+
+        private float _knockOutTimer;
         
         public AnimatorAgent AnimatorAgent => animatorAgent;
         public NavMeshAgent NavMeshAgent => navMeshAgent;
@@ -32,15 +34,15 @@ namespace NPC
         public NpcSettings Settings => settings;
         public RouteProvider RouteProvider => _routeProvider;
 
-        public event Action PlayerCollided;
-
         private void Awake()
         {
+            _dialogSpeaker = new DialogSpeaker();
+            _dialogSpeaker.Initialize(settings, dialogView, vision, this);
+            
             _routeProvider = new RouteProvider(this);
             _stateMachine = new NpcStateMachine(this);
             
-            _dialogSpeaker = new DialogSpeaker();
-            _dialogSpeaker.Initialize(settings, dialogView, vision, this);
+            navMeshAgent.isStopped = true;
         }
 
         private void OnDisable() => dialogView.gameObject.SetActive(false);
@@ -49,14 +51,22 @@ namespace NPC
         {
             _stateMachine.Tick();
             _dialogSpeaker.Tick();
+
+            _knockOutTimer += Time.deltaTime;
         }
 
         private void FixedUpdate() => _stateMachine.FixedTick();
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag(PlayerTag))
-                PlayerCollided?.Invoke();
+            if (other.gameObject.CompareTag(PlayerTag) && _knockOutTimer > settings.KnockOutCooldown)
+            {
+                _dialogSpeaker.OnPlayerCollided();
+                animatorAgent.PlayKnockOut();
+                vision.TryLookAtPlayer(4f);
+                
+                _knockOutTimer = 0f;
+            }
         }
     }
 }
