@@ -15,8 +15,8 @@ namespace NPC.StateMachine
         {
             _states = new Dictionary<Type, IState>()
             {
-                [typeof(IdleState)] = new IdleState(this, walkableNpc, walkableNpc.Settings, walkableNpc.RouteProvider),
-                [typeof(WalkState)] = new WalkState(this, walkableNpc, walkableNpc.RouteProvider, walkableNpc.Rigidbody, walkableNpc.NavMeshAgent, walkableNpc.Settings),
+                [typeof(IdleState)] = new IdleState(this, walkableNpc, walkableNpc.Settings, walkableNpc.RouteProvider, walkableNpc.AnimatorAgent),
+                [typeof(WalkState)] = new WalkState(this, walkableNpc, walkableNpc.RouteProvider, walkableNpc.Rigidbody, walkableNpc.NavMeshAgent, walkableNpc.AnimatorAgent, walkableNpc.Settings),
             };
             
             foreach (IState state in _states.Values) 

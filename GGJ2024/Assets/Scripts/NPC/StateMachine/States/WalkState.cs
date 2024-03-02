@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using GGJ.Infrastructure;
+using Logic;
 using NPC.Components;
 using NPC.Settings;
 using UnityEngine;
@@ -14,17 +15,19 @@ namespace NPC.StateMachine.States
         private readonly RouteProvider _routeProvider;
         private readonly Rigidbody _rigidbody;
         private readonly NavMeshAgent _navMeshAgent;
+        private readonly AnimatorAgent _animatorAgent;
         private readonly NpcSettings _settings;
 
         private Coroutine _walkRoutine;
 
         public bool IsNeedToRun => _settings.CanRun && Random.Range(0f, 1f) >= 0.5f;
 
-        public WalkState(NpcStateMachine stateMachine, ICoroutineRunner coroutineRunner, RouteProvider routeProvider, Rigidbody rigidbody, NavMeshAgent navMeshAgent, NpcSettings settings) : base(stateMachine, coroutineRunner)
+        public WalkState(NpcStateMachine stateMachine, ICoroutineRunner coroutineRunner, RouteProvider routeProvider, Rigidbody rigidbody, NavMeshAgent navMeshAgent, AnimatorAgent animatorAgent, NpcSettings settings) : base(stateMachine, coroutineRunner)
         {
             _routeProvider = routeProvider;
             _rigidbody = rigidbody;
             _navMeshAgent = navMeshAgent;
+            _animatorAgent = animatorAgent;
             _settings = settings;
 
             routeProvider.DestinationPointReached += StopRouteWalk;
@@ -33,32 +36,41 @@ namespace NPC.StateMachine.States
 
         public override void InitializeTransitions()
         {
-            /*Transitions.AddRange(new[]
+            Transitions.AddRange(new[]
             {
-                new Transition(StateMachine.GetState<IdleState>(), () => ),
-            });*/
+                new Transition(StateMachine.GetState<IdleState>(), () => _animatorAgent.State == AnimatorState.KnockOut),
+            });
         }
 
         public override void Tick()
         {
             if (_routeProvider.Route != null && _walkRoutine == null) 
                 _walkRoutine = CoroutineRunner.StartCoroutine(StartRouteWalk());
+            
+            base.Tick();
         }
 
-        public override void Exit() => StopRouteWalk(this, null);
+        public override void Exit()
+        {
+            base.Exit();
+            StopRouteWalk(this, null);
+        }
 
         private void OnCurrentPointChanged()
         {
             _navMeshAgent.speed = IsNeedToRun ? _settings.MaxRunSpeed : _settings.MaxWalkSpeed;
-            _navMeshAgent.destination = _routeProvider.CurrentRoutePoint.transform.position;
         }
         
         private IEnumerator StartRouteWalk()
         {
+            _navMeshAgent.isStopped = false;
+            
             while (true)
             {
                 if (_navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon) 
                     _rigidbody.transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
+                
+                _navMeshAgent.destination = _routeProvider.CurrentRoutePoint.transform.position;
                 
                 yield return new WaitForEndOfFrame();
             }
@@ -68,6 +80,7 @@ namespace NPC.StateMachine.States
         {
             if (_walkRoutine != null)
             {
+                _navMeshAgent.isStopped = true;
                 CoroutineRunner.StopCoroutine(_walkRoutine);
                 _walkRoutine = null;
             }
