@@ -26,6 +26,7 @@ namespace NPC
             routes.ForEach(route => route.Initialize());
             //routes.ForEach(route => route.RootPointCameraVisibleChanged += OnRootPointCameraVisibleChanged);
             _availableRoutes = new List<Route>(routes);
+            Debug.Log(_availableRoutes.Count);
 
             StartCoroutine(StartObserve());
         }
@@ -67,7 +68,7 @@ namespace NPC
         {
             if (npcFactory.TryGetRandomNpc(out WalkableNpc npc))
                 if (_availableRoutes.Count != 0)
-                    SpawnNpc(npc, _availableRoutes[Random.Range(0, routes.Count)]);
+                    SpawnNpc(npc, _availableRoutes[Random.Range(0, _availableRoutes.Count)]);
         }
 
         private void SpawnNpc(WalkableNpc npc, Route route)
