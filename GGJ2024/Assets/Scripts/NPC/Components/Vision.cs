@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Logic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace NPC.Components
 {
@@ -15,6 +16,10 @@ namespace NPC.Components
         [Header("Vision settings")]
         [SerializeField] private TriggerObserver visionTrigger;
         [SerializeField, Min(0f)] private float minVisionPoint;
+
+        [Header("Components")] 
+        [SerializeField] private AnimatorAgent animatorAgent;
+        [SerializeField] private NavMeshAgent navMeshAgent;
 
         private Transform _playerTransform;
         private Quaternion _initialRotation;
@@ -32,12 +37,9 @@ namespace NPC.Components
             return false;
         }
         
-        private void Awake()
-        {
-            _initialRotation = modelHead.rotation;
-        }
+        private void Awake() => _initialRotation = modelHead.rotation;
 
-        private void Update() => LookAtPlayerWhenMinVisionPoint();
+        private void Update() => ChooseLookingDirection();
 
         private void OnEnable()
         {
@@ -63,15 +65,17 @@ namespace NPC.Components
                 _playerTransform = null;
         }
 
-        private bool ObjectInMinVisionRadius(Vector3 position) => 
+        private bool IsObjectInMinVisionRadius(Vector3 position) => 
             Vector3.Distance(transform.position, position) < minVisionPoint;
 
-        private void LookAtPlayerWhenMinVisionPoint()
+        private void ChooseLookingDirection()
         {
-            if (PlayerInVisionRadius && ObjectInMinVisionRadius(_playerTransform.position))
+            if (PlayerInVisionRadius && IsObjectInMinVisionRadius(_playerTransform.position))
                 RotateHeadTowards(_playerTransform.position);
+            else if (animatorAgent.State == AnimatorState.Walking)
+                RotateHeadTowards(transform.position + navMeshAgent.velocity);
             else
-                RotateHeadTowards(transform.TransformDirection(transform.forward));
+                RotateHeadTowards(transform.position + transform.forward);
         }
 
         private IEnumerator LookAtPlayerRoutine(float duration)
