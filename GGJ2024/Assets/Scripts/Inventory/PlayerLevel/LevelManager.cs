@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private double playerXP;
     [SerializeField] private double playerLevel;
+    public double getPlayerLevel { get => playerLevel;}
     private double currentXPneeded;
 
     private void Start()
