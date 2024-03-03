@@ -425,11 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faae95763e5a93945bf6ba6cf33bfb7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passiveSpeed: 1
-  activeSpeed: 2
+  passiveSpeed: 4
+  activeSpeed: 6
   difficulty: 1
-  progressSuccessValue: 1
-  progressFailureValue: 2
+  progressSuccessValue: 0.25
+  progressFailureValue: 0.4
   ui: {fileID: 2487157116399337014}
 --- !u!114 &2487157116399337014
 MonoBehaviour:

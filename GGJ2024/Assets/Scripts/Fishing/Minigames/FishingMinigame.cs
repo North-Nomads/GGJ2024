@@ -9,8 +9,8 @@ namespace GGJ.Fishing.Minigames
         [SerializeField] private float passiveSpeed;
         [SerializeField] private float activeSpeed;
         [SerializeField] private float difficulty;
-        [SerializeField] private int progressSuccessValue;
-        [SerializeField] private int progressFailureValue;
+        [SerializeField] private float progressSuccessValue;
+        [SerializeField] private float progressFailureValue;
         [SerializeField] private MinigameUI ui;
 
         private float _floatPosition;
@@ -25,12 +25,12 @@ namespace GGJ.Fishing.Minigames
             _floatPosition += _currentSpeed * Time.deltaTime;
             float distance = Mathf.Abs(_floatPosition);
             Debug.Log(distance);
-            if (distance > 0.5f)
+            if (distance > 1f)
             {
                 OnGameEnded(this, false);
                 return;
             }
-            else if (distance > 0.2f)
+            else if (distance > 0.6f)
             {
                 _progress -= progressFailureValue * Time.deltaTime;
             }
